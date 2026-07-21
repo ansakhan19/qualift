@@ -14,6 +14,9 @@ const STAGES = [
 ]
 
 const STAGE_ROUTES = {
+  1: '/',
+  2: '/',
+  3: '/docs',
   4: '/docs',
   5: '/docs',
   6: '/review',
@@ -48,7 +51,7 @@ export default function Dashboard() {
 
   function handleStageClick(stage) {
     const route = STAGE_ROUTES[stage]
-    if (route && stage <= current) router.push(route)
+    if (route) router.push(route)
   }
 
   const activeStage = STAGES.find(s => s.n === current) || STAGES[0]
@@ -114,23 +117,23 @@ export default function Dashboard() {
               {/* Card */}
               <div
                 onClick={() => handleStageClick(stage.n)}
-                className={`flex-1 ml-3 mb-2 p-3 rounded-xl border transition-all ${
-                  isActive ? 'bg-purple-50 border-purple-300 cursor-pointer' :
-                  isDone   ? 'bg-gray-50 border-gray-200 cursor-pointer hover:bg-gray-100' :
-                             'bg-gray-50 border-gray-100 opacity-50 cursor-default'
+                className={`flex-1 ml-3 mb-2 p-3 rounded-xl border transition-all cursor-pointer ${
+                  isActive ? 'bg-purple-50 border-purple-300' :
+                  isDone   ? 'bg-gray-50 border-gray-200 hover:bg-gray-100' :
+                             'bg-gray-50 border-gray-100 hover:bg-gray-100'
                 }`}
               >
                 <div className="flex justify-between items-center">
-                  <p className={`text-sm font-medium ${isLocked ? 'text-gray-400' : 'text-gray-900'}`}>{stage.label}</p>
+                  <p className="text-sm font-medium text-gray-900">{stage.label}</p>
                   <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                     isDone   ? 'bg-teal-50 text-teal-700' :
                     isActive ? 'bg-purple-400 text-white' :
-                               'bg-gray-100 text-gray-400 border border-gray-200'
+                               'bg-gray-100 text-gray-500 border border-gray-200'
                   }`}>
-                    {isDone ? 'Done' : isActive ? 'In progress' : 'Locked'}
+                    {isDone ? 'Done' : isActive ? 'In progress' : 'Up next'}
                   </span>
                 </div>
-                <p className={`text-xs mt-1 ${isLocked ? 'text-gray-300' : 'text-gray-500'}`}>
+                <p className="text-xs mt-1 text-gray-500">
                   {stage.sub(progress)}
                 </p>
 
