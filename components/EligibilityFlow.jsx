@@ -271,9 +271,9 @@ function CheckEmail({ email, onContinue }) {
       <p className="text-sm font-medium text-purple-700 bg-purple-50 rounded-lg px-4 py-2 inline-block mb-6">{email}</p>
       <div className="flex flex-col gap-3 text-left mb-6">
         {[
-          ['Open the email from Qualift', 'Check your spam folder if you don't see it within 2 minutes.'],
+          ['Open the email from Qualift', "Check your spam folder if you don't see it within 2 minutes."],
           ['Tap "Continue my application"', 'Works on any device, any browser.'],
-          ['You'll land right back here', 'Progress is fully restored.'],
+          ["You'll land right back here", 'Progress is fully restored.'],
         ].map(([title, sub], i) => (
           <div key={i} className="flex gap-3 items-start bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
             <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-xs font-medium flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</div>
@@ -376,8 +376,8 @@ export default function EligibilityFlow({ onComplete }) {
       </p>
       <div className="flex flex-col gap-3">
         {[
-          { label: 'Yes — I'm an international student', sub: 'F-1, J-1, or other student visa', val: 'international' },
-          { label: 'No — I'm an NYC resident', sub: 'US citizen, green card, or other status', val: 'domestic' },
+          { label: "Yes — I'm an international student", sub: 'F-1, J-1, or other student visa', val: 'international' },
+          { label: "No — I'm an NYC resident", sub: 'US citizen, green card, or other status', val: 'domestic' },
         ].map(o => (
           <button key={o.val} onClick={() => handleStudentType(o.val)}
             className="text-left border border-gray-200 rounded-xl p-4 bg-gray-50 hover:border-purple-400 hover:bg-purple-50 transition-all">
@@ -415,8 +415,8 @@ export default function EligibilityFlow({ onComplete }) {
       question="Are you 18 years old or older?"
       sub="Fair Fares requires applicants to be 18 or older. Under 18? Your school may provide a free Student MetroCard."
       options={[
-        { label: 'Yes, I'm 18 or older', value: true },
-        { label: 'No, I'm under 18', value: false },
+        { label: "Yes, I'm 18 or older", value: true },
+        { label: "No, I'm under 18", value: false },
       ]}
       onAnswer={handleAge}
       onBack={() => setScreen('savePrompt')}
@@ -428,7 +428,7 @@ export default function EligibilityFlow({ onComplete }) {
       question="Are you currently receiving Cash Assistance from HRA?"
       sub="Cash Assistance (Public Assistance) recipients already qualify for a free MetroCard — you may not need Fair Fares at all."
       options={[
-        { label: 'No, I don't receive Cash Assistance', value: false },
+        { label: "No, I don't receive Cash Assistance", value: false },
         { label: 'Yes, I receive Cash Assistance', value: true },
       ]}
       onAnswer={handleCashAssist}
@@ -441,7 +441,7 @@ export default function EligibilityFlow({ onComplete }) {
       question="Do you currently have an MTA Reduced-Fare or OMNY reduced-fare benefit?"
       sub="This is the senior or disability transit discount — not a regular MetroCard. Most people select No."
       options={[
-        { label: 'No, I don't have a reduced-fare benefit', value: false },
+        { label: "No, I don't have a reduced-fare benefit", value: false },
         { label: 'Yes, I have an existing reduced-fare benefit', value: true },
       ]}
       onAnswer={handleExisting}
