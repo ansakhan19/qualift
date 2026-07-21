@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { ProgressProvider, useProgress } from '@/store/ProgressContext'
 
@@ -54,5 +54,16 @@ function VerifyInner() {
 }
 
 export default function VerifyPage() {
-  return <ProgressProvider><VerifyInner /></ProgressProvider>
+  return (
+    <ProgressProvider>
+      <Suspense fallback={
+        <div className="flex flex-col items-center justify-center min-h-screen px-6 text-center">
+          <div className="w-12 h-12 rounded-full border-2 border-purple-400 border-t-transparent animate-spin mb-4" />
+          <p className="text-sm text-gray-500">Loading…</p>
+        </div>
+      }>
+        <VerifyInner />
+      </Suspense>
+    </ProgressProvider>
+  )
 }
