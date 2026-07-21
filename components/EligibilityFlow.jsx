@@ -301,7 +301,8 @@ export default function EligibilityFlow({ onComplete }) {
   // screen: 'studentType'|'metroReveal'|'savePrompt'|'checkEmail'|
   //         'q_age'|'q_cashAssist'|'q_existing'|'q_household'|'incomeSlider'|
   //         'eligible'|'ineligible'|'cashAssist'
-  const [screen, setScreen]         = useState('studentType')
+  const initialScreen = progress.studentType && progress.currentStage >= 2 ? 'q_age' : 'studentType'
+  const [screen, setScreen]         = useState(initialScreen)
   const [ineligReason, setIneligReason] = useState(null)
   const [savedEmail, setSavedEmail]   = useState(null)
 

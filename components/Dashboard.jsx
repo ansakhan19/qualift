@@ -14,8 +14,8 @@ const STAGES = [
 ]
 
 const STAGE_ROUTES = {
-  1: '/',
-  2: '/',
+  1: '/eligibility',
+  2: '/eligibility',
   3: '/docs',
   4: '/docs',
   5: '/docs',
