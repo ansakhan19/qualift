@@ -13,12 +13,12 @@
     "react-dom": "^18",
     "better-sqlite3": "^9.4.3",
     "resend": "^3.2.0",
-    "uuid": "^9.0.1"
-  },
-  "devDependencies": {
+    "uuid": "^9.0.1",
     "tailwindcss": "^3.4.1",
     "postcss": "^8",
-    "autoprefixer": "^10",
+    "autoprefixer": "^10"
+  },
+  "devDependencies": {
     "@types/better-sqlite3": "^7.6.8"
   }
 }
