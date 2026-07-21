@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { useProgress } from '@/store/ProgressContext'
 import GuideShell from './guides/GuideShell'
 
@@ -184,6 +185,7 @@ function BranchOpts({ label, opts, onSelect }) {
 
 export default function DocCollection() {
   const { progress, updateDocs, advanceStage } = useProgress()
+  const router = useRouter()
   const isIntl = progress.studentType === 'international'
 
   // screen: 'list' | 'noincomeQ1' | 'noincomeQ2' | guide key
@@ -192,10 +194,15 @@ export default function DocCollection() {
   const docs = progress.docs || {}
 
   function toggle(key) {
-    updateDocs({ [key]: !docs[key] })
+    const newVal = !docs[key]
+    updateDocs({ [key]: newVal })
     // If checking off income, clear incomeType branch
     if ((key === 'income' || key === 'd_income') && !docs[key]) {
       updateDocs({ incomeType: null, d_incomeType: null })
+    }
+    // Check if all docs are now collected
+    if (newVal) {
+      checkAdvance({ ...docs, [key]: true })
     }
   }
 
@@ -207,7 +214,10 @@ export default function DocCollection() {
 
   function checkAdvance(d) {
     const keys = isIntl ? ['id','addr','income','i20'] : ['d_id','d_addr','d_income','d_ssn']
-    if (keys.every(k => d[k])) advanceStage(5)
+    if (keys.every(k => d[k])) {
+      advanceStage(6)
+      router.push('/review')
+    }
   }
 
   // Guide screen
