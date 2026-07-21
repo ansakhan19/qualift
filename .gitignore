@@ -1,0 +1,17 @@
+# dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# env — never commit secrets
+.env.local
+.env
+
+# SQLite database
+*.db
+
+# OS
+.DS_Store
+Thumbs.db
