@@ -39,11 +39,14 @@ export default function SubmissionGuide() {
   const { application: a, studentType, docs } = progress
   const isIntl = studentType === 'international'
   const [sendState, setSendState] = useState('idle') // 'idle'|'sending'|'sent'|'error'
+  const [sendError, setSendError] = useState('')
+  const [dlState, setDlState]     = useState('idle') // 'idle'|'downloading'|'error'
+  const [dlError, setDlError]     = useState('')
 
   async function handleSendGuide() {
     const email = progress.email || a?.email
     if (!email) return
-    setSendState('sending')
+    setSendState('sending'); setSendError('')
     try {
       const res = await fetch('/api/send-guide', {
         method: 'POST',
@@ -51,9 +54,37 @@ export default function SubmissionGuide() {
         body: JSON.stringify({ email, progress }),
       })
       const data = await res.json()
-      setSendState(data.ok ? 'sent' : 'error')
+      if (data.ok) { setSendState('sent') }
+      else { setSendState('error'); setSendError(data.error || 'Email failed — you can still download the PDF above') }
     } catch {
-      setSendState('error')
+      setSendState('error'); setSendError('Network error — you can still download the PDF above')
+    }
+  }
+
+  async function handleDownloadPdf() {
+    setDlState('downloading'); setDlError('')
+    try {
+      const res = await fetch('/api/download-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progress }),
+      })
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}))
+        throw new Error(data.error || 'PDF generation failed')
+      }
+      const blob = await res.blob()
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'Fair_Fares_Guide.pdf'
+      document.body.appendChild(link)
+      link.click()
+      link.remove()
+      URL.revokeObjectURL(url)
+      setDlState('idle')
+    } catch (err) {
+      setDlState('error'); setDlError(err.message)
     }
   }
 
@@ -117,6 +148,21 @@ export default function SubmissionGuide() {
 
         <Section title="DOCUMENTS TO UPLOAD" rows={uploadDocs} />
 
+        {/* Download PDF — works without email */}
+        <button
+          onClick={handleDownloadPdf}
+          disabled={dlState === 'downloading'}
+          className={`flex items-center justify-center gap-2 w-full rounded-xl py-3.5 text-sm font-medium transition-colors ${
+            dlState === 'error'
+              ? 'bg-coral-50 text-coral-700 border border-coral-200'
+              : 'bg-purple-400 hover:bg-purple-600 text-white'
+          }`}
+        >
+          <i className={`ti ${dlState === 'downloading' ? 'ti-loader animate-spin' : 'ti-download'}`} />
+          {dlState === 'downloading' ? 'Generating PDF…' : dlState === 'error' ? 'Failed — tap to retry' : 'Download my guide as a PDF'}
+        </button>
+        {dlError && <p className="text-xs text-coral-600 text-center -mt-2">{dlError}</p>}
+
         {/* Email guide button */}
         {(progress.email || a?.email) && (
           <button
@@ -140,6 +186,7 @@ export default function SubmissionGuide() {
               : 'Email me this guide as a PDF'}
           </button>
         )}
+        {sendError && <p className="text-xs text-coral-600 text-center -mt-2">{sendError}</p>}
 
         {/* HRA link */}
         <a

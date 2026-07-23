@@ -17,8 +17,8 @@ function Home() {
     setView('eligibility')
   }
 
-  if (view === 'splash') return <Splash onStart={handleStart} />
-  return <EligibilityFlow onComplete={() => router.push('/dashboard')} />
+  if (view === 'splash') return <div className="max-w-xl mx-auto"><Splash onStart={handleStart} /></div>
+  return <div className="max-w-2xl mx-auto"><EligibilityFlow onComplete={() => router.push('/dashboard')} /></div>
 }
 
 export default function Page() {

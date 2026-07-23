@@ -13,7 +13,7 @@ export default function Page() {
           <div className="h-4 w-px bg-gray-200" />
           <p className="text-sm font-medium text-gray-900">Submission guide</p>
         </div>
-        <SubmissionGuide />
+        <div className="max-w-2xl mx-auto"><SubmissionGuide /></div>
       </div>
     </ProgressProvider>
   )

@@ -17,10 +17,13 @@ export async function POST(req) {
     const pdfBuffer = await renderToBuffer(doc)
 
     // Send via Resend with attachment
+    if (!process.env.RESEND_API_KEY) {
+      return Response.json({ ok: false, error: 'Email is not configured on the server (missing RESEND_API_KEY). Use the Download PDF button instead.' }, { status: 500 })
+    }
     const resend = new Resend(process.env.RESEND_API_KEY)
     const name = [progress?.application?.firstName, progress?.application?.lastName].filter(Boolean).join(' ') || 'there'
 
-    await resend.emails.send({
+    const { error: sendError } = await resend.emails.send({
       from: FROM,
       to: email,
       subject: 'Your Fair Fares application guide — Qualift',
@@ -67,6 +70,11 @@ export async function POST(req) {
         },
       ],
     })
+
+    // Resend does NOT throw on API errors — it returns { error }
+    if (sendError) {
+      return Response.json({ ok: false, error: sendError.message || 'Email delivery failed' }, { status: 500 })
+    }
 
     return Response.json({ ok: true })
   } catch (err) {

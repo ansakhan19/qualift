@@ -8,6 +8,14 @@
   --max-w: 420px;
 }
 
+/* Desktop: use the page, not a phone-width column */
+@media (min-width: 768px) {
+  :root { --max-w: 760px; }
+}
+@media (min-width: 1152px) {
+  :root { --max-w: 1080px; }
+}
+
 * { box-sizing: border-box; }
 
 body {

@@ -36,7 +36,7 @@ function EligibilityPage() {
           Start fresh
         </button>
       </div>
-      <EligibilityFlow onComplete={() => router.push('/dashboard')} />
+      <div className="max-w-2xl mx-auto"><EligibilityFlow onComplete={() => router.push('/dashboard')} /></div>
     </div>
   )
 }
