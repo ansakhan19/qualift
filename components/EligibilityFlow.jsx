@@ -57,10 +57,10 @@ function getInitialScreen(progress) {
   if (e.status === 'ineligible') return 'ineligible'
   if (e.status === 'eligible') return 'eligible'
   if (e.cashAssist === true) return 'cashAssist'
-  if (e.householdSize !== undefined) return 'incomeSlider'
-  if (e.existingBenefit !== undefined) return 'q_household'
-  if (e.cashAssist !== undefined) return 'q_existing'
-  if (e.age18Plus !== undefined) return 'q_cashAssist'
+  if (e.householdSize != null) return 'incomeSlider'
+  if (e.existingBenefit != null) return 'q_household'
+  if (e.cashAssist != null) return 'q_existing'
+  if (e.age18Plus != null) return 'q_cashAssist'
   return 'q_age'
 }
 
@@ -119,7 +119,7 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
           </button>
         ))}
       </div>
-      {selectedValue !== undefined && (
+      {selectedValue != null && (
         <div className="px-5 mt-4 pb-5">
           <button
             onClick={() => onAnswer(selectedValue)}
@@ -135,7 +135,7 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
 
 function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
   const fpl  = getFPL(householdSize)
-  const [val, setVal] = useState(initialIncome !== undefined ? initialIncome : Math.round(fpl * 0.7))
+  const [val, setVal] = useState(initialIncome != null ? initialIncome : Math.round(fpl * 0.7))
   const under = val <= fpl
   const pct   = Math.round((val / fpl) * 100)
 
