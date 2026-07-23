@@ -35,11 +35,25 @@ export default function Splash({ onStart, onReturnEmail }) {
         </div>
 
         <h1 className="text-2xl font-medium text-gray-900 leading-tight mb-3">
-          Get half-price rides on the NYC subway and bus
+          Get 50% off every subway and bus ride
         </h1>
-        <p className="text-sm text-gray-500 leading-relaxed max-w-xs mb-5">
+        <p className="text-sm text-gray-500 leading-relaxed max-w-xs mb-4">
           Qualift walks you through the Fair Fares application — from eligibility to submission — at your own pace.
         </p>
+
+        {/* Fare comparison — the value, up front */}
+        <div className="flex gap-3 w-full mb-4">
+          <div className="flex-1 bg-purple-50 border border-purple-200 rounded-xl p-3 text-center">
+            <p className="text-lg font-medium text-purple-800">$1.50</p>
+            <p className="text-xs text-purple-600">per ride with Fair Fares</p>
+            <p className="text-xs text-gray-400 line-through">$3.00 regular</p>
+          </div>
+          <div className="flex-1 bg-purple-50 border border-purple-200 rounded-xl p-3 text-center">
+            <p className="text-lg font-medium text-purple-800">$17.50</p>
+            <p className="text-xs text-purple-600">weekly fare cap</p>
+            <p className="text-xs text-gray-400 line-through">$35 regular</p>
+          </div>
+        </div>
 
         <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-400 rounded-full px-3 py-1.5 text-xs text-teal-800 mb-6">
           <i className="ti ti-shield-check" />

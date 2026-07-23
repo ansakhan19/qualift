@@ -4,7 +4,7 @@ import { useProgress } from '@/store/ProgressContext'
 
 const STAGES = [
   { n: 1, icon: 'ti-user',             label: 'Your profile',           sub: p => p.studentType === 'international' ? 'International student · F-1 visa' : 'NYC resident' },
-  { n: 2, icon: 'ti-shield-check',     label: 'Eligibility check',      sub: p => p.eligibility?.status === 'eligible' ? 'Income ≤ 100% FPL · Qualified' : 'Pending' },
+  { n: 2, icon: 'ti-shield-check',     label: 'Eligibility check',      sub: p => p.eligibility?.status === 'eligible' ? 'Income within 200% FPL · Qualified' : 'Pending' },
   { n: 3, icon: 'ti-list-check',       label: 'Your document list',     sub: p => `${docTotal(p)} documents required for your profile` },
   { n: 4, icon: 'ti-file-description', label: 'Document collection',    sub: p => `${docDone(p)} of ${docTotal(p)} documents ready` },
   { n: 5, icon: 'ti-checklist',        label: 'All docs verified',      sub: () => 'Proceed when all documents are ready' },

@@ -83,10 +83,7 @@ const INCOME_LABELS = {
   alimony: 'Alimony / child support',
 }
 
-const METRO_LABELS = {
-  '7day': '7-Day Unlimited — $17 (normally $34)',
-  ppr: 'Pay-Per-Ride — $1.65/trip (normally $2.90)',
-}
+// Fair Fares now issues OMNY cards — $1.50/ride (50% off $3.00), $17.50 weekly fare cap
 
 function Step({ n, title, desc, link }) {
   return (
@@ -151,8 +148,8 @@ export function buildApplicationGuide(progress) {
             <Text style={s.infoValue}>{isIntl ? 'International student (F-1)' : 'NYC resident'}</Text>
           </View>
           <View style={s.infoItem}>
-            <Text style={s.infoLabel}>MetroCard choice</Text>
-            <Text style={s.infoValue}>{a.metroCardType === 'ppr' ? 'Pay-Per-Ride' : '7-Day Unlimited'}</Text>
+            <Text style={s.infoLabel}>Your discount</Text>
+            <Text style={s.infoValue}>OMNY — $1.50/ride (50% off)</Text>
           </View>
         </View>
 
@@ -175,8 +172,8 @@ export function buildApplicationGuide(progress) {
 
           {/* Part 2 — Start application */}
           <Text style={s.sectionTitle}>PART 2 — Start the Fair Fares application</Text>
-          <Step n={6} title="From the dashboard, tap 'Apply for Benefits'" desc="After logging in, you'll see your HRA dashboard. Tap 'Apply for Benefits' → then scroll to find 'Fair Fares NYC MetroCard Program' and tap it." />
-          <Step n={7} title="Select your MetroCard type" desc={`Choose: ${METRO_LABELS[a.metroCardType || '7day']}. You can change this later at any MetroCard machine.`} />
+          <Step n={6} title="Go to the Fair Fares portal and tap 'Apply Now'" desc="From nyc.gov/accessfairfares, log in and tap 'Apply Now' on the Fair Fares homepage. If asked to connect an HRA case and you've never received benefits, tap 'Skip'." />
+          <Step n={7} title="Choose where your discount applies" desc="Select 'Subways and eligible buses' — you'll receive an OMNY card with the 50% discount ($1.50 per ride, $17.50 weekly fare cap). Access-A-Ride users can choose that instead." />
 
           {/* Part 3 — Fill the form */}
           <Text style={s.sectionTitle}>PART 3 — Fill in your information</Text>
@@ -229,7 +226,7 @@ export function buildApplicationGuide(progress) {
           <Text style={s.sectionTitle}>Income information</Text>
           <FieldRow label="Income source" value={INCOME_LABELS[a.incomeSource] || a.incomeSource} />
           <FieldRow label="Monthly gross income" value={a.monthlyIncome} note="Before taxes" />
-          <FieldRow label="Annual household income" value={a.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null} note="≤ 100% FPL" />
+          <FieldRow label="Annual household income" value={a.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null} note="≤ 200% FPL" />
           <FieldRow label="Household size" value={a.householdSize ? `${a.householdSize} ${a.householdSize == 1 ? 'person' : 'people'}` : null} />
 
           {/* Part 4 — Upload docs */}
@@ -254,7 +251,7 @@ export function buildApplicationGuide(progress) {
           {/* After submission */}
           <View style={s.noteBox}>
             <Text style={s.noteText}>
-              {'After approval, your Fair Fares MetroCard will be mailed to your address within 7–10 business days. Activate it at any NYC subway station MetroCard machine.\n\nQuestions? Call HRA at 718-557-1399 (Mon–Fri, 8am–5pm).'}
+              {'After approval, your Fair Fares OMNY card will be mailed to your address. Tap it at any subway turnstile or bus reader — the 50% discount is automatic. Register your card at omny.info to reload it and track free-ride progress.\n\nQuestions? Call HRA at 718-557-1399 (Mon–Fri, 8am–5pm) or OMNY at 877-789-6669.'}
             </Text>
           </View>
 

@@ -3,6 +3,16 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useProgress } from '@/store/ProgressContext'
 
+/**
+ * Mirrors the real ACCESS HRA Fair Fares application flow, based on the
+ * official ACCESS HRA User Guide (nyc.gov/accesshra, 2026 edition).
+ * Sections follow what HRA actually asks: age/personal info, residence &
+ * mailing address, contact info, identity verification, household income —
+ * then submission + document upload via the ACCESS HRA mobile app.
+ */
+
+// ── UI primitives ────────────────────────────────────────────────
+
 function Field({ label, annotation, children, refNote }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -58,41 +68,119 @@ function RadioGroup({ options, value, onChange }) {
   )
 }
 
-// Section definitions
-function useIntlSections(app, update) {
-  return [
+/**
+ * "What you'll see" — a mockup frame styled like the ACCESS HRA portal,
+ * so users recognize the real screen when they get there.
+ */
+function ScreenPreview({ title, children }) {
+  return (
+    <div className="rounded-xl overflow-hidden border border-gray-300 shadow-sm mb-5">
+      {/* Browser chrome */}
+      <div className="bg-gray-100 border-b border-gray-200 px-3 py-2 flex items-center gap-2">
+        <div className="flex gap-1">
+          <span className="w-2 h-2 rounded-full bg-gray-300" />
+          <span className="w-2 h-2 rounded-full bg-gray-300" />
+          <span className="w-2 h-2 rounded-full bg-gray-300" />
+        </div>
+        <div className="flex-1 bg-white rounded-md px-2 py-0.5 text-xs text-gray-400 truncate">
+          a069-access.nyc.gov/accesshra/fairfares
+        </div>
+      </div>
+      {/* ACCESS HRA header bar */}
+      <div className="bg-[#1a3c6e] px-3 py-2 flex items-center justify-between">
+        <span className="text-white text-xs font-semibold tracking-wide">ACCESS HRA</span>
+        <span className="text-white/70 text-xs">Fair Fares NYC</span>
+      </div>
+      <div className="bg-white p-4">
+        <p className="text-sm font-semibold text-gray-800 mb-3">{title}</p>
+        {children}
+      </div>
+      <div className="bg-purple-50 border-t border-purple-100 px-3 py-1.5 text-center">
+        <p className="text-xs text-purple-600 font-medium">↑ This is what the real screen looks like</p>
+      </div>
+    </div>
+  )
+}
+
+/** A single mocked field row inside a ScreenPreview, showing the user's value */
+function PreviewField({ label, value, hint }) {
+  return (
+    <div className="mb-3">
+      <p className="text-xs text-gray-500 mb-1">{label}</p>
+      <div className={`border rounded-lg px-3 py-2 text-sm ${value ? 'border-teal-400 bg-teal-50 text-gray-900' : 'border-gray-300 bg-gray-50 text-gray-400'}`}>
+        {value || hint || 'You will type this'}
+      </div>
+      {value && <p className="text-xs text-teal-700 mt-0.5 flex items-center gap-1"><i className="ti ti-check" />Your answer — copy it exactly</p>}
+    </div>
+  )
+}
+
+// ── Section definitions (mirror the real application order) ──────
+
+function useSections(app, update, isIntl) {
+  const sections = [
     {
-      title: 'Personal information',
-      sub: 'Exactly as it appears on your government-issued ID.',
+      title: 'Before you start — ACCESS HRA account',
+      sub: 'The Fair Fares application lives on the ACCESS HRA portal. You need a free account first.',
       fields: () => (
         <div className="flex flex-col gap-4">
-          <Field label="LEGAL FIRST NAME" annotation="Must match your passport or state ID exactly.">
-            <Input value={app.firstName} onChange={v => update({ firstName: v })} placeholder="e.g. Maria" />
-          </Field>
-          <Field label="LEGAL LAST NAME">
-            <Input value={app.lastName} onChange={v => update({ lastName: v })} placeholder="e.g. Santos" />
-          </Field>
-          <Field label="DATE OF BIRTH" annotation="HRA uses DOB to verify identity. Format: MM/DD/YYYY.">
-            <Input value={app.dob} onChange={v => update({ dob: v })} placeholder="MM/DD/YYYY" />
-          </Field>
-          <Field label="SSN OR ITIN (optional)" annotation="Fair Fares does not trigger public charge. If you have an ITIN, use it. You may leave this blank.">
-            <Input value={app.ssn} onChange={v => update({ ssn: v })} placeholder="XXX-XX-XXXX or leave blank" />
-          </Field>
-          <Field label="PHONE NUMBER" refNote="HRA may call this number to verify your application.">
-            <Input value={app.phone} onChange={v => update({ phone: v })} placeholder="(212) 555-0100" type="tel" />
-          </Field>
-          <Field label="EMAIL ADDRESS" refNote="Used for your ACCESS HRA account and status updates.">
-            <Input value={app.email} onChange={v => update({ email: v })} placeholder="you@email.com" type="email" />
+          <ScreenPreview title="Create Account — ACCESS HRA">
+            <PreviewField label="Email or username" value={app.email} hint="you@email.com" />
+            <PreviewField label="Password" hint="You will choose one" />
+            <PreviewField label="Security question" hint="You will pick one about yourself" />
+          </ScreenPreview>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <p className="text-sm font-medium text-gray-900 mb-2">Steps</p>
+            <ol className="text-sm text-gray-500 leading-relaxed list-decimal ml-4 flex flex-col gap-1">
+              <li>Go to <strong>nyc.gov/accessfairfares</strong></li>
+              <li>Click "Create Account" — use the email above</li>
+              <li>When asked to connect an HRA case: if you've never received benefits, click <strong>"Skip"</strong></li>
+              <li>From the Fair Fares homepage, click <strong>"Apply Now"</strong></li>
+            </ol>
+          </div>
+          <Field label="EMAIL YOU'LL USE FOR ACCESS HRA" annotation="Use an email you check often — HRA sends application updates here.">
+            <Input value={app.email} onChange={v => update({ email: v })} placeholder="you@email.com" type="email" prefilled={!!app.email} />
           </Field>
         </div>
       ),
     },
     {
-      title: 'NYC address',
-      sub: 'Must match your proof of address document exactly.',
+      title: 'Personal information & age',
+      sub: 'The application first confirms you are 18–64. Enter your name exactly as on your ID.',
       fields: () => (
         <div className="flex flex-col gap-4">
-          <Field label="STREET ADDRESS" annotation="Pre-filled from your documents — confirm it's correct." refNote="From: lease or utility bill">
+          <ScreenPreview title="Tell us about yourself">
+            <PreviewField label="Legal first name" value={app.firstName} />
+            <PreviewField label="Legal last name" value={app.lastName} />
+            <PreviewField label="Date of birth" value={app.dob} hint="MM/DD/YYYY" />
+          </ScreenPreview>
+          <Field label="LEGAL FIRST NAME" annotation="Must match your passport, state ID, or IDNYC exactly.">
+            <Input value={app.firstName} onChange={v => update({ firstName: v })} placeholder="e.g. Maria" prefilled={!!app.firstName} />
+          </Field>
+          <Field label="LEGAL LAST NAME">
+            <Input value={app.lastName} onChange={v => update({ lastName: v })} placeholder="e.g. Santos" prefilled={!!app.lastName} />
+          </Field>
+          <Field label="DATE OF BIRTH" annotation="You must be 18 through 64 to qualify. Format: MM/DD/YYYY.">
+            <Input value={app.dob} onChange={v => update({ dob: v })} placeholder="MM/DD/YYYY" prefilled={!!app.dob} />
+          </Field>
+          <Field label="SSN OR ITIN (optional)" annotation="Fair Fares does not trigger public charge and is open regardless of immigration status. If you have an ITIN, you can use it. You may leave this blank.">
+            <Input value={app.ssn} onChange={v => update({ ssn: v })} placeholder="XXX-XX-XXXX or leave blank" />
+          </Field>
+        </div>
+      ),
+    },
+    {
+      title: 'Residence & mailing address',
+      sub: 'You must live in one of the five boroughs. Your OMNY card will be mailed to the mailing address.',
+      fields: () => (
+        <div className="flex flex-col gap-4">
+          <ScreenPreview title="Where do you live?">
+            <PreviewField label="Residence address" value={app.address} hint="123 Main St, Apt 2A" />
+            <PreviewField label="Borough" value={app.borough} />
+            <PreviewField label="ZIP code" value={app.zip} />
+            <PreviewField label="Mailing address" hint="Check 'Same as residence' if it matches" />
+          </ScreenPreview>
+          <Field label="STREET ADDRESS" annotation="Must match your proof-of-address document (lease, utility bill, or bank statement) exactly." refNote="From: lease or utility bill">
             <Input value={app.address} onChange={v => update({ address: v })} placeholder="123 Main St, Apt 2A" prefilled={!!app.address} />
           </Field>
           <Field label="BOROUGH">
@@ -108,47 +196,79 @@ function useIntlSections(app, update) {
           <Field label="ZIP CODE" refNote="From: lease or utility bill">
             <Input value={app.zip} onChange={v => update({ zip: v })} placeholder="10001" prefilled={!!app.zip} />
           </Field>
-          <Field label="HOW LONG AT THIS ADDRESS?" annotation="If less than 3 months, you may need an additional address document.">
-            <Select value={app.lengthAtAddress} onChange={v => update({ lengthAtAddress: v })} options={[
+          <Field label="IS YOUR MAILING ADDRESS THE SAME?" annotation="Your Fair Fares OMNY card is mailed here — make sure you can receive mail at this address.">
+            <RadioGroup value={String(app.mailingSame ?? 'true')} onChange={v => update({ mailingSame: v })} options={[
+              { value: 'true', label: 'Yes — mail my card to my residence' },
+              { value: 'false', label: 'No — I use a different mailing address', sub: 'You\'ll enter it on the real form' },
+            ]} />
+          </Field>
+        </div>
+      ),
+    },
+    {
+      title: 'Contact information',
+      sub: 'HRA uses this to reach you about your application status.',
+      fields: () => (
+        <div className="flex flex-col gap-4">
+          <ScreenPreview title="How can we contact you?">
+            <PreviewField label="Phone number" value={app.phone} hint="(212) 555-0100" />
+            <PreviewField label="Email address" value={app.email} hint="you@email.com" />
+          </ScreenPreview>
+          <Field label="PHONE NUMBER" refNote="HRA may call or text this number about your application.">
+            <Input value={app.phone} onChange={v => update({ phone: v })} placeholder="(212) 555-0100" type="tel" prefilled={!!app.phone} />
+          </Field>
+          <Field label="EMAIL ADDRESS" refNote="Status updates and e-notices arrive here.">
+            <Input value={app.email} onChange={v => update({ email: v })} placeholder="you@email.com" type="email" prefilled={!!app.email} />
+          </Field>
+        </div>
+      ),
+    },
+    {
+      title: 'Identity verification',
+      sub: 'The application offers to verify your identity, age, and address electronically — so you may not need to upload documents at all.',
+      fields: () => (
+        <div className="flex flex-col gap-4">
+          <ScreenPreview title="Confirm your information">
+            <p className="text-xs text-gray-600 leading-relaxed mb-3">
+              "Would you like to use an authentication service to verify your identity, age and address?"
+            </p>
+            <div className="border border-teal-400 bg-teal-50 rounded-lg px-3 py-2 text-sm text-gray-900 mb-2">◉ Yes — verify me electronically</div>
+            <div className="border border-gray-300 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-400">○ No — I'll upload documents instead</div>
+          </ScreenPreview>
+          <Field label="DO YOU HAVE AN IDNYC CARD?" annotation="If yes, entering your IDNYC card number can verify your identity, age, AND address instantly — no document uploads needed for those categories. If no, the portal can verify you via your cell phone number.">
+            <RadioGroup value={app.hasIdnyc || ''} onChange={v => update({ hasIdnyc: v })} options={[
+              { value: 'yes', label: 'Yes — I have IDNYC', sub: 'Have your card number ready (front of card)' },
+              { value: 'no', label: 'No IDNYC', sub: 'The portal will offer phone verification, or you can upload documents' },
+            ]} />
+          </Field>
+          <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3">
+            <p className="text-xs text-purple-800 leading-relaxed">
+              <strong>Say yes if you can.</strong> Successful electronic verification means fewer documents to upload later — often just proof of income.
+            </p>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: 'Household & income',
+      sub: 'Your pre-tax household income must be at or below 200% of the Federal Poverty Level.',
+      fields: () => (
+        <div className="flex flex-col gap-4">
+          <ScreenPreview title="Household income">
+            <PreviewField label="Household size" value={app.householdSize ? String(app.householdSize) : ''} />
+            <PreviewField label="Annual household income (before taxes)" value={app.annualIncome ? `$${parseInt(app.annualIncome).toLocaleString()}` : ''} />
+          </ScreenPreview>
+          <Field label="HOUSEHOLD SIZE" annotation="Count yourself plus people you financially support. Roommates who are not related to you and not your dependents do NOT count.">
+            <Select value={String(app.householdSize || '')} onChange={v => update({ householdSize: v })} options={[
               { value: '', label: 'Select…' },
-              { value: 'lt3', label: 'Less than 3 months' },
-              { value: '3to12', label: '3–12 months' },
-              { value: 'gt12', label: 'More than 1 year' },
+              { value: '1', label: '1 — Just me' },
+              { value: '2', label: '2 people' },
+              { value: '3', label: '3 people' },
+              { value: '4', label: '4 people' },
+              { value: '5', label: '5 or more people' },
             ]} />
           </Field>
-        </div>
-      ),
-    },
-    {
-      title: 'Immigration & student status',
-      sub: 'International students only. This section does not appear on domestic applications.',
-      fields: () => (
-        <div className="flex flex-col gap-4">
-          <Field label="VISA TYPE" annotation="Select the visa type shown on your I-20.">
-            <Select value={app.visaType} onChange={v => update({ visaType: v })} options={[
-              { value: 'F-1', label: 'F-1 — Academic student' },
-              { value: 'J-1', label: 'J-1 — Exchange visitor' },
-              { value: 'Other', label: 'Other' },
-            ]} />
-          </Field>
-          <Field label="I-20 SEVIS ID NUMBER" annotation="The 'Student ID' at the top of your I-20, starting with N. Example: N0012345678." refNote="I-20 form — top right corner">
-            <Input value={app.sevisId} onChange={v => update({ sevisId: v })} placeholder="N0012345678" />
-          </Field>
-          <Field label="PROGRAM END DATE" annotation="The date your current I-20 program ends. If extended, use the most recent end date." refNote="I-20 field 5 — 'Program of Study'">
-            <Input value={app.programEndDate} onChange={v => update({ programEndDate: v })} placeholder="MM/DD/YYYY" />
-          </Field>
-          <Field label="UNIVERSITY / SCHOOL NAME">
-            <Input value={app.school} onChange={v => update({ school: v })} placeholder="e.g. City College of New York" />
-          </Field>
-        </div>
-      ),
-    },
-    {
-      title: 'Income',
-      sub: 'Be accurate — HRA may verify against tax records.',
-      fields: () => (
-        <div className="flex flex-col gap-4">
-          <Field label="PRIMARY INCOME SOURCE" annotation="Based on your document collection — change if needed.">
+          <Field label="PRIMARY INCOME SOURCE" annotation="Match this to the income document you collected.">
             <Select value={app.incomeSource} onChange={v => update({ incomeSource: v })} options={[
               { value: '', label: 'Select…' },
               { value: 'finaid', label: 'Financial aid / student stipend' },
@@ -158,70 +278,90 @@ function useIntlSections(app, update) {
               { value: 'zero', label: 'No income' },
             ]} />
           </Field>
-          <Field label="MONTHLY GROSS INCOME" annotation="Gross = before taxes. For annual aid, divide by 12. Example: $18,500 ÷ 12 = $1,542/month." refNote="From your income document">
-            <Input value={app.monthlyIncome} onChange={v => update({ monthlyIncome: v, annualIncome: v ? String(Math.round(parseFloat(v.replace(/[^0-9.]/g,'')) * 12)) : '' })} placeholder="$0.00" prefilled={!!app.monthlyIncome} />
+          <Field label="ANNUAL HOUSEHOLD INCOME (BEFORE TAXES)" annotation="Report gross income. Do not include roommates' income." refNote="From your income document — must match what you upload">
+            <Input value={app.annualIncome ? `$${parseInt(app.annualIncome).toLocaleString()}` : ''} onChange={v => update({ annualIncome: v.replace(/[^0-9]/g, '') })} placeholder="$0" prefilled={!!app.annualIncome} />
           </Field>
-          <Field label="ANNUAL HOUSEHOLD INCOME" annotation="Auto-calculated from monthly × 12. Adjust if there are other household income sources." refNote="Must be ≤ 100% FPL for your household size">
-            <Input value={app.annualIncome ? `$${parseInt(app.annualIncome).toLocaleString()}` : ''} onChange={v => update({ annualIncome: v })} placeholder="$0" prefilled={!!app.annualIncome} />
-          </Field>
-          <Field label="HOUSEHOLD SIZE" annotation="Number of people who live with you and share expenses — including yourself.">
-            <Select value={String(app.householdSize || '')} onChange={v => update({ householdSize: v })} options={[
-              { value: '', label: 'Select…' },
-              { value: '1', label: '1 — Live alone' },
-              { value: '2', label: '2 people' },
-              { value: '3', label: '3 people' },
-              { value: '4', label: '4 people' },
-              { value: '5', label: '5 or more people' },
-            ]} />
-          </Field>
-        </div>
-      ),
-    },
-    {
-      title: 'Current transit & benefit status',
-      sub: 'HRA checks this to ensure you\'re not already receiving a conflicting transit benefit.',
-      fields: () => (
-        <div className="flex flex-col gap-5">
-          <Field label="DO YOU CURRENTLY HAVE A REDUCED-FARE METROCARD OR OMNY BENEFIT?" annotation="This is the senior or disability transit discount — not a regular MetroCard. Most people select No.">
-            <RadioGroup value={String(app.hasReducedFare)} onChange={v => update({ hasReducedFare: v === 'true' })} options={[
-              { value: 'false', label: 'No' },
-              { value: 'true', label: 'Yes — I currently have a Reduced-Fare benefit', sub: 'Note: you may need to cancel it before Fair Fares is approved' },
-            ]} />
-          </Field>
-          <Field label="DO YOU CURRENTLY RECEIVE SNAP, MEDICAID, OR OTHER HRA BENEFITS?" annotation="If yes, your income is already verified with HRA — this can speed up your approval.">
+          <Field label="DO YOU RECEIVE SNAP OR CASH ASSISTANCE?" annotation="If yes, HRA already has your income verified — you may be fast-tracked and skip income documents entirely.">
             <RadioGroup value={String(app.hasHRABenefits)} onChange={v => update({ hasHRABenefits: v === 'true' })} options={[
               { value: 'false', label: 'No' },
-              { value: 'true', label: 'Yes — I receive HRA benefits', sub: 'Your income verification may be waived' },
+              { value: 'true', label: 'Yes — I receive SNAP or Cash Assistance', sub: 'Look for the "Enroll Now" fast-track alert on your ACCESS HRA home page' },
             ]} />
           </Field>
         </div>
       ),
     },
     {
-      title: 'MetroCard preference',
-      sub: 'Choose the type of Fair Fares MetroCard that best fits how you ride.',
+      title: 'Submit & upload documents',
+      sub: 'After submitting, you have 10 calendar days to upload any required documents — using the ACCESS HRA mobile app.',
       fields: () => (
-        <div className="flex flex-col gap-3">
-          <Field label="WHICH TYPE DO YOU WANT?">
-            <RadioGroup value={app.metroCardType || '7day'} onChange={v => update({ metroCardType: v })} options={[
-              { value: '7day', label: '7-Day Unlimited — $17', sub: 'Best if you ride more than 12 times a week (normally $34)' },
-              { value: 'ppr', label: 'Pay-Per-Ride — $1.65 per trip', sub: 'Best if you ride occasionally (normally $2.90)' },
-            ]} />
-          </Field>
-          <p className="text-xs text-gray-400 leading-relaxed bg-gray-50 rounded-lg px-3 py-2">
-            You can change your MetroCard type after approval at any NYC subway station MetroCard machine.
-          </p>
+        <div className="flex flex-col gap-4">
+          <ScreenPreview title="Confirmation — Application Submitted">
+            <div className="bg-teal-50 border border-teal-400 rounded-lg px-3 py-2 mb-3">
+              <p className="text-sm font-medium text-teal-800">✓ Your application has been submitted</p>
+              <p className="text-xs text-teal-700 mt-0.5">Application ID: FF-XXXXXXXX</p>
+            </div>
+            <p className="text-xs text-gray-600 leading-relaxed mb-2">
+              "Would you like to see your required documents?"
+            </p>
+            <div className="border border-teal-400 bg-teal-50 rounded-lg px-3 py-2 text-sm text-gray-900">◉ YES, see my required documents</div>
+          </ScreenPreview>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <p className="text-sm font-medium text-gray-900 mb-2">What happens next</p>
+            <ol className="text-sm text-gray-500 leading-relaxed list-decimal ml-4 flex flex-col gap-1.5">
+              <li><strong>Write down your Application ID</strong> from the confirmation page</li>
+              <li>Click "YES, see my required documents" — this shows exactly what to upload</li>
+              <li>Download the <strong>ACCESS HRA Mobile app</strong> — documents MUST be uploaded through the app, not the website</li>
+              <li>Upload within <strong>10 calendar days</strong> — the documents you collected with Qualift are exactly what you need</li>
+              <li>Decision within ~30 days; your OMNY card arrives by mail after approval</li>
+            </ol>
+          </div>
+          <div className="bg-coral-50 border border-coral-100 rounded-xl px-4 py-3">
+            <p className="text-xs text-coral-800 leading-relaxed">
+              <strong>Don't miss the 10-day window.</strong> Applications without documents are denied automatically. Your docs are ready — upload them the same day you apply.
+            </p>
+          </div>
         </div>
       ),
     },
   ]
+
+  // International students: add a note section about supporting documents (the
+  // real form does NOT ask visa questions — status doesn't affect eligibility)
+  if (isIntl) {
+    sections.splice(6, 0, {
+      title: 'For international students',
+      sub: 'The application does not ask about your visa — Fair Fares is open regardless of immigration status.',
+      fields: () => (
+        <div className="flex flex-col gap-4">
+          <div className="bg-teal-50 border border-teal-100 rounded-xl p-4">
+            <p className="text-sm font-medium text-teal-800 mb-2">Good news — no immigration questions</p>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              The Fair Fares application never asks your visa type or SEVIS ID. Your I-20 and passport
+              are simply used as <strong>identity documents</strong> when you upload proof.
+            </p>
+          </div>
+          <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
+            <p className="text-sm font-medium text-gray-900 mb-2">When uploading documents, use:</p>
+            <ul className="text-sm text-gray-500 leading-relaxed flex flex-col gap-1.5 list-disc ml-4">
+              <li><strong>Identity:</strong> your passport (or IDNYC if you have one)</li>
+              <li><strong>NYC address:</strong> your lease, utility bill, or bank statement</li>
+              <li><strong>Income:</strong> financial aid letter, stipend letter, or pay stubs</li>
+            </ul>
+          </div>
+          <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3">
+            <p className="text-xs text-purple-800 leading-relaxed">
+              <strong>Public charge:</strong> Fair Fares is a city transit discount, not a federal benefit — it does not affect visa renewals or future immigration applications.
+            </p>
+          </div>
+        </div>
+      ),
+    })
+  }
+
+  return sections
 }
 
-function useDomesticSections(app, update) {
-  // Domestic: same as intl but no immigration section → 5 sections
-  const all = useIntlSections(app, update)
-  return [all[0], all[1], all[3], all[4], all[5]] // skip index 2 (immigration)
-}
+// ── Main component ───────────────────────────────────────────────
 
 export default function AppWalkthrough() {
   const { progress, updateApplication, advanceStage } = useProgress()
@@ -231,13 +371,12 @@ export default function AppWalkthrough() {
 
   function update(patch) { updateApplication(patch) }
 
-  const sections = isIntl ? useIntlSections(app, update) : useDomesticSections(app, update)
+  const sections = useSections(app, update, isIntl)
   const [step, setStep] = useState(0)
   const total = sections.length
-  const pct   = Math.round(((step) / total) * 100)
 
   function next() {
-    if (step < total - 1) { setStep(s => s + 1) }
+    if (step < total - 1) { setStep(s => s + 1); window.scrollTo(0, 0) }
     else {
       advanceStage(8)
       router.push('/guide')
@@ -273,7 +412,7 @@ export default function AppWalkthrough() {
       {/* Nav */}
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[420px] flex gap-3 px-5 py-4 bg-white border-t border-gray-100">
         {step > 0 && (
-          <button onClick={() => setStep(s => s - 1)}
+          <button onClick={() => { setStep(s => s - 1); window.scrollTo(0, 0) }}
             className="flex-1 border border-gray-200 rounded-xl py-3 text-sm text-gray-500 font-medium hover:border-purple-300 hover:text-purple-600 transition-colors">
             Back
           </button>

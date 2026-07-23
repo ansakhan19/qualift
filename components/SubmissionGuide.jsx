@@ -13,10 +13,7 @@ const INCOME_LABELS = {
   alimony: 'Alimony / child support',
 }
 
-const METRO_LABELS = {
-  '7day': '7-Day Unlimited — $17 (normally $34)',
-  'ppr': 'Pay-Per-Ride — $1.65/trip (normally $2.90)',
-}
+// Fair Fares now issues OMNY cards — $1.50/ride (50% off $3.00), weekly cap $17.50
 
 function Section({ title, rows }) {
   return (
@@ -106,24 +103,16 @@ export default function SubmissionGuide() {
           ['Zip code', a?.zip, 'From your lease'],
         ]} />
 
-        {isIntl && (
-          <Section title="IMMIGRATION STATUS" rows={[
-            ['Visa type', a?.visaType],
-            ['SEVIS ID', a?.sevisId, 'I-20, top right'],
-            ['Program end date', a?.programEndDate, 'I-20 field 5'],
-            ['School name', a?.school],
-          ]} />
-        )}
-
         <Section title="INCOME" rows={[
           ['Income source', INCOME_LABELS[a?.incomeSource] || a?.incomeSource],
-          ['Monthly gross income', a?.monthlyIncome, 'From your income document'],
-          ['Annual household income', a?.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null],
-          ['Household size', a?.householdSize ? `${a.householdSize} ${a.householdSize == 1 ? 'person' : 'people'}` : null],
+          ['Annual household income', a?.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null, 'Before taxes — must match your document'],
+          ['Household size', a?.householdSize ? `${a.householdSize} ${a.householdSize == 1 ? 'person' : 'people'}` : null, "Roommates don't count"],
         ]} />
 
-        <Section title="METROCARD" rows={[
-          ['Card type', METRO_LABELS[a?.metroCardType || '7day']],
+        <Section title="YOUR DISCOUNT (OMNY)" rows={[
+          ['Per ride', '$1.50 (normally $3.00)'],
+          ['Weekly fare cap', '$17.50 — after 12 paid rides in 7 days, the rest is free'],
+          ['Card', 'OMNY card mailed to you after approval'],
         ]} />
 
         <Section title="DOCUMENTS TO UPLOAD" rows={uploadDocs} />

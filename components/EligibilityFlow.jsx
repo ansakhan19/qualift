@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useProgress } from '@/store/ProgressContext'
-import { getFPL, isEligibleByIncome } from '@/lib/fpl'
+import { getFPL, getFairFaresLimit, isEligibleByIncome } from '@/lib/fpl'
 import SaveProgress from './SaveProgress'
 
 const INELIG = {
@@ -12,8 +12,8 @@ const INELIG = {
     tag: 'Residency requirement not met',
   },
   age: {
-    title: 'Fair Fares requires applicants to be 18 or older',
-    reason: "If you're under 18, you may be eligible for a free NYC DOE Student MetroCard through your school instead.",
+    title: 'Fair Fares is for New Yorkers aged 18 through 64',
+    reason: "If you're under 18, you may be eligible for free student fares through your school. If you're 65 or older, the MTA Reduced-Fare program gives you the same 50% discount — apply at mta.info/fares.",
     tag: 'Age requirement not met',
   },
   existing: {
@@ -23,8 +23,8 @@ const INELIG = {
   },
   income: {
     title: 'Your income may be above the Fair Fares limit',
-    reason: "Fair Fares is for households at or below 100% of the Federal Poverty Level. There are other programs that may still help.",
-    tag: 'Income above 100% FPL',
+    reason: "Fair Fares is for households at or below 200% of the Federal Poverty Level. There are other programs that may still help.",
+    tag: 'Income above 200% FPL',
   },
 }
 
@@ -34,7 +34,8 @@ const ORGS = {
     { name: 'Your local transit authority', desc: 'Most cities offer reduced-fare programs similar to Fair Fares.', tag: 'Transit help' },
   ],
   age: [
-    { name: 'NYC DOE Student MetroCard', desc: "Enrolled in a NYC school? You may qualify for a free Student MetroCard.", tag: 'For students under 18' },
+    { name: 'NYC DOE student fares', desc: "Enrolled in a NYC school? You may qualify for free student fares through your school.", tag: 'For students under 18' },
+    { name: 'MTA Reduced-Fare (65+)', desc: 'New Yorkers 65 and older get the same 50% discount through the MTA — no income requirement.', tag: 'For seniors 65+' },
     { name: 'ACCESS NYC', desc: 'Find youth-specific benefit programs for New Yorkers under 18.', tag: 'Youth benefits' },
   ],
   existing: [
@@ -135,10 +136,10 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
 }
 
 function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
-  const fpl  = getFPL(householdSize)
-  const [val, setVal] = useState(initialIncome != null ? initialIncome : Math.round(fpl * 0.7))
-  const under = val <= fpl
-  const pct   = Math.round((val / fpl) * 100)
+  const limit = getFairFaresLimit(householdSize)
+  const [val, setVal] = useState(initialIncome != null ? initialIncome : Math.round(limit * 0.6))
+  const under = val <= limit
+  const pct   = Math.round((val / limit) * 100)
 
   return (
     <div className="fade-in flex flex-col h-full px-5 pt-5">
@@ -160,7 +161,7 @@ function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
       </div>
 
       <input
-        type="range" min="0" max={fpl * 3} step="500"
+        type="range" min="0" max={limit * 2} step="500"
         value={val} onChange={e => setVal(Number(e.target.value))}
         className="w-full mb-4"
       />
@@ -170,8 +171,8 @@ function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
       </div>
       <div className={`rounded-xl px-4 py-3 text-sm font-medium text-center mb-6 ${under ? 'bg-teal-50 text-teal-800' : 'bg-coral-50 text-coral-800'}`}>
         {under
-          ? `✓ At or below 100% FPL for a household of ${householdSize} — you may qualify`
-          : `↑ ${pct}% of FPL for a household of ${householdSize} — above the Fair Fares limit`}
+          ? `✓ Within the Fair Fares limit of $${limit.toLocaleString()} for a household of ${householdSize} — you may qualify`
+          : `↑ Above the Fair Fares limit of $${limit.toLocaleString()} (200% FPL) for a household of ${householdSize}`}
       </div>
       <button
         onClick={() => onSubmit(val)}
@@ -190,7 +191,7 @@ function MetroCardReveal({ studentType, onContinue }) {
         <p className="text-xs font-medium tracking-wide text-purple-600 mb-2">
           {studentType === 'international' ? 'INTERNATIONAL STUDENT PATH' : 'NYC RESIDENT PATH'}
         </p>
-        <h2 className="text-lg font-medium text-gray-900 mb-1">Fair Fares — 50% off MetroCard</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-1">Fair Fares — 50% off every ride with OMNY</h2>
         <p className="text-sm text-gray-600 leading-relaxed">
           {studentType === 'international'
             ? 'As an international student, you can qualify for Fair Fares. It does not trigger public charge — your visa status is safe.'
@@ -199,16 +200,19 @@ function MetroCardReveal({ studentType, onContinue }) {
       </div>
       <div className="flex gap-3 mb-5">
         <div className="flex-1 bg-white border border-gray-200 rounded-xl p-3 text-center">
-          <p className="text-lg font-medium text-gray-900">$17</p>
-          <p className="text-xs text-gray-500">7-Day Unlimited</p>
-          <p className="text-xs text-gray-400">(was $34)</p>
+          <p className="text-lg font-medium text-gray-900">$1.50</p>
+          <p className="text-xs text-gray-500">Per ride</p>
+          <p className="text-xs text-gray-400">(was $3.00)</p>
         </div>
         <div className="flex-1 bg-white border border-gray-200 rounded-xl p-3 text-center">
-          <p className="text-lg font-medium text-gray-900">$1.65</p>
-          <p className="text-xs text-gray-500">Per trip</p>
-          <p className="text-xs text-gray-400">(was $2.90)</p>
+          <p className="text-lg font-medium text-gray-900">$17.50</p>
+          <p className="text-xs text-gray-500">Weekly fare cap</p>
+          <p className="text-xs text-gray-400">(was $35)</p>
         </div>
       </div>
+      <p className="text-xs text-gray-400 leading-relaxed mb-5 bg-gray-50 rounded-lg px-3 py-2">
+        Fair Fares now uses OMNY — you'll receive an OMNY card, tap to ride, and after 12 paid rides in 7 days the rest of the week is free.
+      </p>
       <button
         onClick={onContinue}
         className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors"
@@ -263,21 +267,21 @@ function CashAssistScreen() {
       <div className="w-16 h-16 rounded-full bg-teal-50 border-2 border-teal-400 flex items-center justify-center text-teal-700 text-2xl mx-auto mb-4">
         <i className="ti ti-credit-card" />
       </div>
-      <h2 className="text-xl font-medium text-gray-900 mb-2">Good news — you already qualify for a free MetroCard</h2>
+      <h2 className="text-xl font-medium text-gray-900 mb-2">Good news — you already qualify for free transit</h2>
       <p className="text-sm text-gray-500 leading-relaxed mb-6">
-        NYC Cash Assistance recipients get a free unlimited MetroCard through HRA. You don't need Fair Fares.
+        NYC Cash Assistance recipients get full carfare through HRA. You don't need Fair Fares.
       </p>
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left mb-4">
-        <p className="text-sm font-medium text-gray-900 mb-2">How to get your HRA MetroCard</p>
+        <p className="text-sm font-medium text-gray-900 mb-2">How to get your HRA transit benefit</p>
         <p className="text-sm text-gray-500 leading-relaxed">
-          Log into <strong>ACCESS HRA</strong> → "My Benefits." Your MetroCard benefit should appear there.
+          Log into <strong>ACCESS HRA</strong> → "My Benefits." Your transit benefit should appear there.
           If not, call your HRA caseworker or 718-557-1399.
         </p>
       </div>
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left">
         <p className="text-sm font-medium text-gray-900 mb-2">Can't access online? Visit HRA in person</p>
         <p className="text-sm text-gray-500 leading-relaxed">
-          Bring your EBT card and case number to any HRA Benefits Access Center — staff can issue or reactivate your MetroCard on the spot.
+          Bring your EBT card and case number to any HRA Benefits Access Center — staff can issue or reactivate your transit benefit on the spot.
         </p>
       </div>
     </div>
@@ -286,7 +290,7 @@ function CashAssistScreen() {
 
 function EligibleScreen({ progress, onContinue, onStartFresh }) {
   const { eligibility } = progress
-  const fpl = getFPL(eligibility.householdSize || 1)
+  const limit = getFairFaresLimit(eligibility.householdSize || 1)
   return (
     <div className="fade-in px-5 pt-8 text-center">
       <div className="w-16 h-16 rounded-full bg-purple-50 border-2 border-purple-400 flex items-center justify-center text-purple-600 text-3xl mx-auto mb-4">
@@ -298,10 +302,10 @@ function EligibleScreen({ progress, onContinue, onStartFresh }) {
         <p className="text-xs font-medium tracking-wide text-purple-600 mb-2">YOUR ELIGIBILITY SUMMARY</p>
         {[
           ['NYC resident', '✓ Yes'],
-          ['Age 18+', '✓ Yes'],
+          ['Age 18–64', '✓ Yes'],
           ['Household size', `${eligibility.householdSize || 1} ${(eligibility.householdSize || 1) === 1 ? 'person' : 'people'}`],
           ['Annual income', `$${(eligibility.annualIncome || 0).toLocaleString()}`],
-          [`FPL limit (${eligibility.householdSize || 1}-person)`, `$${fpl.toLocaleString()}`],
+          [`Fair Fares limit (200% FPL, ${eligibility.householdSize || 1}-person)`, `$${limit.toLocaleString()}`],
           ['No conflicting benefits', '✓ Confirmed'],
         ].map(([k, v]) => (
           <div key={k} className="flex justify-between py-1 text-sm">
@@ -441,7 +445,7 @@ export default function EligibilityFlow({ onComplete }) {
     <div className="fade-in px-5 pt-6">
       <h2 className="text-xl font-medium text-gray-900 mb-2">Are you an international student?</h2>
       <p className="text-sm text-gray-500 leading-relaxed mb-6">
-        This determines which documents you'll need and which MetroCard benefits you're eligible for.
+        This determines which documents you'll need and which transit benefits you're eligible for.
       </p>
       <div className="flex flex-col gap-3">
         {[
@@ -494,11 +498,11 @@ export default function EligibilityFlow({ onComplete }) {
 
   if (screen === 'q_age') return (
     <Question step={1} total={Q_TOTAL}
-      question="Are you 18 years old or older?"
-      sub="Fair Fares requires applicants to be 18 or older. Under 18? Your school may provide a free Student MetroCard."
+      question="Are you between 18 and 64 years old?"
+      sub="Fair Fares is for ages 18–64. Under 18? Your school may provide free student fares. 65+? The MTA Reduced-Fare program offers the same 50% discount."
       options={[
-        { label: "Yes, I'm 18 or older", value: true },
-        { label: "No, I'm under 18", value: false },
+        { label: "Yes, I'm 18 to 64", value: true },
+        { label: "No, I'm under 18 or 65+", value: false },
       ]}
       selectedValue={e.age18Plus}
       onAnswer={handleAge}
@@ -509,7 +513,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_cashAssist') return (
     <Question step={2} total={Q_TOTAL}
       question="Are you currently receiving Cash Assistance from HRA?"
-      sub="Cash Assistance (Public Assistance) recipients already qualify for a free MetroCard — you may not need Fair Fares at all."
+      sub="Cash Assistance (Public Assistance) recipients already get full carfare from HRA — you may not need Fair Fares at all."
       options={[
         { label: "No, I don't receive Cash Assistance", value: false },
         { label: 'Yes, I receive Cash Assistance', value: true },
@@ -523,7 +527,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_existing') return (
     <Question step={3} total={Q_TOTAL}
       question="Do you currently have an MTA Reduced-Fare or OMNY reduced-fare benefit?"
-      sub="This is the senior or disability transit discount — not a regular MetroCard. Most people select No."
+      sub="This is the senior or disability transit discount — not a regular OMNY card or MetroCard. Most people select No."
       options={[
         { label: "No, I don't have a reduced-fare benefit", value: false },
         { label: 'Yes, I have an existing reduced-fare benefit', value: true },
