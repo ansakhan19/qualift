@@ -1,7 +1,7 @@
 'use client'
 import { createContext, useContext, useState, useCallback, useEffect } from 'react'
 
-const LS_KEY = 'qualift_progress_v2'
+const LS_KEY = 'qualift_progress_v3'
 
 const DEFAULT_PROGRESS = {
   sessionId:   null,
