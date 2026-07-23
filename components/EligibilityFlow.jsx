@@ -48,9 +48,31 @@ const ORGS = {
   ],
 }
 
+// ── Resume helpers ────────────────────────────────────────────────
+
+function getInitialScreen(progress) {
+  const e = progress.eligibility || {}
+  const st = progress.studentType
+  if (!st) return 'studentType'
+  if (e.status === 'ineligible') return 'ineligible'
+  if (e.status === 'eligible') return 'eligible'
+  if (e.cashAssist === true) return 'cashAssist'
+  if (e.householdSize !== undefined) return 'incomeSlider'
+  if (e.existingBenefit !== undefined) return 'q_household'
+  if (e.cashAssist !== undefined) return 'q_existing'
+  if (e.age18Plus !== undefined) return 'q_cashAssist'
+  return 'q_age'
+}
+
+function getInitialIneligReason(progress) {
+  const e = progress.eligibility || {}
+  if (e.status === 'ineligible') return e.ineligReason || 'income'
+  return null
+}
+
 // ── Sub-screens ──────────────────────────────────────────────────
 
-function Question({ step, total, question, sub, options, onAnswer, onBack }) {
+function Question({ step, total, question, sub, note, options, onAnswer, onBack, selectedValue }) {
   return (
     <div className="fade-in flex flex-col h-full">
       <div className="px-5 pt-5">
@@ -64,27 +86,56 @@ function Question({ step, total, question, sub, options, onAnswer, onBack }) {
         </div>
         <p className="text-xs text-gray-400 mt-1 mb-6">Question {step} of {total}</p>
         <h2 className="text-lg font-medium text-gray-900 leading-snug mb-2">{question}</h2>
-        {sub && <p className="text-sm text-gray-500 leading-relaxed mb-6">{sub}</p>}
+        {sub && <p className="text-sm text-gray-500 leading-relaxed mb-3">{sub}</p>}
+        {note && (
+          <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 mb-5">
+            <p className="text-xs text-purple-700 leading-relaxed">{note}</p>
+          </div>
+        )}
+        {!note && <div className="mb-3" />}
       </div>
       <div className="px-5 flex flex-col gap-3">
         {options.map((opt, i) => (
           <button
             key={i}
             onClick={() => onAnswer(opt.value)}
-            className="text-left border border-gray-200 rounded-xl p-4 bg-gray-50 hover:border-purple-400 hover:bg-purple-50 transition-all"
+            className={`text-left border rounded-xl p-4 transition-all ${
+              selectedValue === opt.value
+                ? 'border-purple-400 bg-purple-50'
+                : 'border-gray-200 bg-gray-50 hover:border-purple-400 hover:bg-purple-50'
+            }`}
           >
-            <p className="text-sm font-medium text-gray-900">{opt.label}</p>
-            {opt.sub && <p className="text-xs text-gray-500 mt-1">{opt.sub}</p>}
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-sm font-medium text-gray-900">{opt.label}</p>
+                {opt.sub && <p className="text-xs text-gray-500 mt-1">{opt.sub}</p>}
+              </div>
+              {selectedValue === opt.value && (
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-400 flex items-center justify-center mt-0.5">
+                  <i className="ti ti-check text-white text-xs" />
+                </span>
+              )}
+            </div>
           </button>
         ))}
       </div>
+      {selectedValue !== undefined && (
+        <div className="px-5 mt-4 pb-5">
+          <button
+            onClick={() => onAnswer(selectedValue)}
+            className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors"
+          >
+            Continue →
+          </button>
+        </div>
+      )}
     </div>
   )
 }
 
-function IncomeSlider({ householdSize, onSubmit, onBack }) {
+function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
   const fpl  = getFPL(householdSize)
-  const [val, setVal] = useState(Math.round(fpl * 0.7))
+  const [val, setVal] = useState(initialIncome !== undefined ? initialIncome : Math.round(fpl * 0.7))
   const under = val <= fpl
   const pct   = Math.round((val / fpl) * 100)
 
@@ -96,11 +147,16 @@ function IncomeSlider({ householdSize, onSubmit, onBack }) {
       <div className="bg-gray-100 rounded-full h-1 mb-1">
         <div className="bg-purple-400 h-1 rounded-full bar-fill" style={{ width: '100%' }} />
       </div>
-      <p className="text-xs text-gray-400 mt-1 mb-6">Question 6 of 6</p>
+      <p className="text-xs text-gray-400 mt-1 mb-6">Question 5 of 5</p>
       <h2 className="text-lg font-medium text-gray-900 mb-2">What is your approximate annual household income?</h2>
-      <p className="text-sm text-gray-500 leading-relaxed mb-6">
-        Include all income from all household members before taxes.
+      <p className="text-sm text-gray-500 leading-relaxed mb-3">
+        Include income from everyone in your household — yourself, your spouse or partner, and dependents.
       </p>
+      <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 mb-5">
+        <p className="text-xs text-purple-700 leading-relaxed">
+          <strong>Roommates don't count.</strong> If you live with roommates who are not related to you and not your dependents, do not include their income — only report your own.
+        </p>
+      </div>
 
       <input
         type="range" min="0" max={fpl * 3} step="500"
@@ -301,17 +357,15 @@ export default function EligibilityFlow({ onComplete }) {
   // screen: 'studentType'|'metroReveal'|'savePrompt'|'checkEmail'|
   //         'q_age'|'q_cashAssist'|'q_existing'|'q_household'|'incomeSlider'|
   //         'eligible'|'ineligible'|'cashAssist'
-  const initialScreen = progress.studentType && progress.currentStage >= 2 ? 'q_age' : 'studentType'
-  const [screen, setScreen]         = useState(initialScreen)
-  const [ineligReason, setIneligReason] = useState(null)
-  const [savedEmail, setSavedEmail]   = useState(null)
+  const [screen, setScreen]             = useState(() => getInitialScreen(progress))
+  const [ineligReason, setIneligReason] = useState(() => getInitialIneligReason(progress))
+  const [savedEmail, setSavedEmail]     = useState(null)
 
   function handleStudentType(type) {
     setProgress(p => ({ ...p, studentType: type, currentStage: 1 }))
     setScreen('metroReveal')
   }
 
-  // After metro reveal → save prompt (first motivating moment)
   function handleMetroNext() {
     setScreen('savePrompt')
   }
@@ -368,6 +422,7 @@ export default function EligibilityFlow({ onComplete }) {
   }
 
   const Q_TOTAL = 5  // age, cashAssist, existing, household, income
+  const e = progress.eligibility || {}
 
   if (screen === 'studentType') return (
     <div className="fade-in px-5 pt-6">
@@ -381,9 +436,22 @@ export default function EligibilityFlow({ onComplete }) {
           { label: "No — I'm an NYC resident", sub: 'US citizen, green card, or other status', val: 'domestic' },
         ].map(o => (
           <button key={o.val} onClick={() => handleStudentType(o.val)}
-            className="text-left border border-gray-200 rounded-xl p-4 bg-gray-50 hover:border-purple-400 hover:bg-purple-50 transition-all">
-            <p className="text-sm font-medium text-gray-900">{o.label}</p>
-            <p className="text-xs text-gray-500 mt-1">{o.sub}</p>
+            className={`text-left border rounded-xl p-4 transition-all ${
+              progress.studentType === o.val
+                ? 'border-purple-400 bg-purple-50'
+                : 'border-gray-200 bg-gray-50 hover:border-purple-400 hover:bg-purple-50'
+            }`}>
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="text-sm font-medium text-gray-900">{o.label}</p>
+                <p className="text-xs text-gray-500 mt-1">{o.sub}</p>
+              </div>
+              {progress.studentType === o.val && (
+                <span className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-400 flex items-center justify-center mt-0.5">
+                  <i className="ti ti-check text-white text-xs" />
+                </span>
+              )}
+            </div>
           </button>
         ))}
       </div>
@@ -419,6 +487,7 @@ export default function EligibilityFlow({ onComplete }) {
         { label: "Yes, I'm 18 or older", value: true },
         { label: "No, I'm under 18", value: false },
       ]}
+      selectedValue={e.age18Plus}
       onAnswer={handleAge}
       onBack={() => setScreen('savePrompt')}
     />
@@ -432,6 +501,7 @@ export default function EligibilityFlow({ onComplete }) {
         { label: "No, I don't receive Cash Assistance", value: false },
         { label: 'Yes, I receive Cash Assistance', value: true },
       ]}
+      selectedValue={e.cashAssist}
       onAnswer={handleCashAssist}
       onBack={() => setScreen('q_age')}
     />
@@ -445,6 +515,7 @@ export default function EligibilityFlow({ onComplete }) {
         { label: "No, I don't have a reduced-fare benefit", value: false },
         { label: 'Yes, I have an existing reduced-fare benefit', value: true },
       ]}
+      selectedValue={e.existingBenefit}
       onAnswer={handleExisting}
       onBack={() => setScreen('q_cashAssist')}
     />
@@ -452,12 +523,14 @@ export default function EligibilityFlow({ onComplete }) {
 
   if (screen === 'q_household') return (
     <Question step={4} total={Q_TOTAL}
-      question="How many people live in your household?"
-      sub="Include everyone who lives with you and shares expenses, including yourself."
+      question="How many people are in your household?"
+      sub="Count only yourself and people you financially support — a spouse, partner, or children in your care."
+      note="Roommates and housemates who are not related to you and not financially dependent on you are NOT part of your household. Do not count them — even if you share an apartment."
       options={[1,2,3,4,5].map(n => ({
-        label: n === 1 ? '1 — I live alone' : `${n} people`,
+        label: n === 1 ? '1 — Just me' : `${n} people`,
         value: n,
       }))}
+      selectedValue={e.householdSize}
       onAnswer={handleHousehold}
       onBack={() => setScreen('q_existing')}
     />
@@ -466,6 +539,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'incomeSlider') return (
     <IncomeSlider
       householdSize={progress.eligibility.householdSize || 1}
+      initialIncome={e.annualIncome}
       onSubmit={handleIncome}
       onBack={() => setScreen('q_household')}
     />
