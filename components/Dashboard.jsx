@@ -69,11 +69,12 @@ export default function Dashboard() {
             {pct}% ready
           </div>
           <button
-            onClick={() => { reset(); router.push('/') }}
-            className="text-gray-300 hover:text-gray-500 text-xs px-2 py-1 rounded-lg hover:bg-gray-100 transition-colors"
-            title="Start over"
+            onClick={() => { reset(); window.location.href = '/' }}
+            className="text-xs text-gray-400 hover:text-coral-600 border border-gray-200 hover:border-coral-200 rounded-lg px-2.5 py-1.5 transition-colors flex items-center gap-1"
+            title="Clear all data and start over"
           >
             <i className="ti ti-refresh" />
+            Start fresh
           </button>
         </div>
       </div>

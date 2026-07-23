@@ -284,7 +284,7 @@ function CashAssistScreen() {
   )
 }
 
-function EligibleScreen({ progress, onContinue }) {
+function EligibleScreen({ progress, onContinue, onStartFresh }) {
   const { eligibility } = progress
   const fpl = getFPL(eligibility.householdSize || 1)
   return (
@@ -313,6 +313,11 @@ function EligibleScreen({ progress, onContinue }) {
       <button onClick={onContinue} className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors">
         Start my application →
       </button>
+      {onStartFresh && (
+        <button onClick={onStartFresh} className="mt-3 text-sm text-gray-400 underline hover:text-gray-600 transition-colors">
+          Not you? Start fresh for a new applicant
+        </button>
+      )}
     </div>
   )
 }
@@ -352,8 +357,15 @@ function CheckEmail({ email, onContinue }) {
 // ── Main EligibilityFlow ─────────────────────────────────────────
 
 export default function EligibilityFlow({ onComplete }) {
-  const { progress, updateEligibility, setProgress, advanceStage } = useProgress()
+  const { progress, updateEligibility, setProgress, advanceStage, reset } = useProgress()
   const router = useRouter()
+
+  // Full wipe — for shared devices at events. Clears data AND returns to first screen.
+  function handleStartFresh() {
+    reset()
+    setIneligReason(null)
+    setScreen('studentType')
+  }
 
   // screen: 'studentType'|'metroReveal'|'savePrompt'|'checkEmail'|
   //         'q_age'|'q_cashAssist'|'q_existing'|'q_household'|'incomeSlider'|
@@ -546,9 +558,9 @@ export default function EligibilityFlow({ onComplete }) {
     />
   )
 
-  if (screen === 'eligible') return <EligibleScreen progress={progress} onContinue={handleComplete} />
+  if (screen === 'eligible') return <EligibleScreen progress={progress} onContinue={handleComplete} onStartFresh={handleStartFresh} />
   if (screen === 'cashAssist') return <CashAssistScreen />
-  if (screen === 'ineligible') return <IneligibleScreen reason={ineligReason} onRestart={() => setScreen('studentType')} />
+  if (screen === 'ineligible') return <IneligibleScreen reason={ineligReason} onRestart={handleStartFresh} />
 
   return null
 }

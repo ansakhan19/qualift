@@ -98,7 +98,12 @@ export function ProgressProvider({ children, initialProgress }) {
 
   const reset = useCallback(() => {
     setProgressState(DEFAULT_PROGRESS)
-    try { localStorage.removeItem(LS_KEY) } catch {}
+    try {
+      // Clear every version of stored progress, past and present
+      localStorage.removeItem('qualift_progress_v1')
+      localStorage.removeItem('qualift_progress_v2')
+      localStorage.removeItem(LS_KEY)
+    } catch {}
   }, [])
 
   return (
