@@ -77,8 +77,9 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
     <div className="fade-in flex flex-col h-full">
       <div className="px-5 pt-5">
         {onBack && (
-          <button onClick={onBack} className="text-gray-400 text-xl mb-4 flex items-center">
-            <i className="ti ti-arrow-left" />
+          <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-purple-600 font-medium mb-4 hover:text-purple-800 transition-colors">
+            <i className="ti ti-arrow-left text-base" />
+            Back
           </button>
         )}
         <div className="bg-gray-100 rounded-full h-1 mb-1">

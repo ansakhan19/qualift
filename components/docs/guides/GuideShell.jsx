@@ -4,8 +4,9 @@ export default function GuideShell({ badge, title, sub, steps, ctaLabel, onCta, 
   return (
     <div className="fade-in pb-8">
       <div className="px-5 pt-5 border-b border-gray-100 pb-4">
-        <button onClick={onBack} className="text-gray-400 text-xl mb-3 flex items-center">
-          <i className="ti ti-arrow-left" />
+        <button onClick={onBack} className="flex items-center gap-1.5 text-sm text-purple-600 font-medium mb-4 hover:text-purple-800 transition-colors">
+          <i className="ti ti-arrow-left text-base" />
+          Back to document list
         </button>
         <span className="inline-block text-xs px-2.5 py-1 rounded-full bg-coral-50 text-coral-700 mb-2">{badge}</span>
         <h2 className="text-lg font-medium text-gray-900 mb-1">{title}</h2>
