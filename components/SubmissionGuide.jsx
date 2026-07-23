@@ -1,4 +1,5 @@
 'use client'
+import { useState } from 'react'
 import { useProgress } from '@/store/ProgressContext'
 
 const INCOME_LABELS = {
@@ -40,6 +41,24 @@ export default function SubmissionGuide() {
   const { progress } = useProgress()
   const { application: a, studentType, docs } = progress
   const isIntl = studentType === 'international'
+  const [sendState, setSendState] = useState('idle') // 'idle'|'sending'|'sent'|'error'
+
+  async function handleSendGuide() {
+    const email = progress.email || a?.email
+    if (!email) return
+    setSendState('sending')
+    try {
+      const res = await fetch('/api/send-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, progress }),
+      })
+      const data = await res.json()
+      setSendState(data.ok ? 'sent' : 'error')
+    } catch {
+      setSendState('error')
+    }
+  }
 
   const uploadDocs = isIntl
     ? [
@@ -108,6 +127,30 @@ export default function SubmissionGuide() {
         ]} />
 
         <Section title="DOCUMENTS TO UPLOAD" rows={uploadDocs} />
+
+        {/* Email guide button */}
+        {(progress.email || a?.email) && (
+          <button
+            onClick={handleSendGuide}
+            disabled={sendState === 'sending' || sendState === 'sent'}
+            className={`flex items-center justify-center gap-2 w-full rounded-xl py-3.5 text-sm font-medium transition-colors ${
+              sendState === 'sent'
+                ? 'bg-teal-50 text-teal-700 border border-teal-200 cursor-default'
+                : sendState === 'error'
+                ? 'bg-coral-50 text-coral-700 border border-coral-200'
+                : 'bg-purple-400 hover:bg-purple-600 text-white'
+            }`}
+          >
+            <i className={`ti ${sendState === 'sent' ? 'ti-check' : sendState === 'sending' ? 'ti-loader animate-spin' : 'ti-mail'}`} />
+            {sendState === 'sent'
+              ? `Guide sent to ${progress.email || a?.email}`
+              : sendState === 'sending'
+              ? 'Generating your guide…'
+              : sendState === 'error'
+              ? 'Failed — tap to retry'
+              : 'Email me this guide as a PDF'}
+          </button>
+        )}
 
         {/* HRA link */}
         <a

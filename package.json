@@ -16,7 +16,8 @@
     "uuid": "^9.0.1",
     "tailwindcss": "^3.4.1",
     "postcss": "^8",
-    "autoprefixer": "^10"
+    "autoprefixer": "^10",
+    "@react-pdf/renderer": "^3.4.4"
   },
   "devDependencies": {
     "@types/better-sqlite3": "^7.6.8"
