@@ -41,8 +41,8 @@ function pillsForStage4(p) {
 }
 
 export default function Dashboard() {
-  const { progress } = useProgress()
-  const router       = useRouter()
+  const { progress, reset } = useProgress()
+  const router              = useRouter()
   const current      = progress.currentStage || 1
   const keys         = docKeys(progress)
   const done         = keys.filter(k => progress.docs?.[k]).length
@@ -64,8 +64,17 @@ export default function Dashboard() {
           <p className="text-xs text-gray-400">Fair Fares readiness</p>
           <h1 className="text-xl font-medium text-gray-900 mt-0.5">Pick up where you left off</h1>
         </div>
-        <div className="bg-purple-50 border border-purple-200 rounded-full px-3 py-1 text-xs text-purple-600 font-medium">
-          {pct}% ready
+        <div className="flex items-center gap-2">
+          <div className="bg-purple-50 border border-purple-200 rounded-full px-3 py-1 text-xs text-purple-600 font-medium">
+            {pct}% ready
+          </div>
+          <button
+            onClick={() => { reset(); router.push('/') }}
+            className="text-gray-300 hover:text-gray-500 text-xs px-2 py-1 rounded-lg hover:bg-gray-100 transition-colors"
+            title="Start over"
+          >
+            <i className="ti ti-refresh" />
+          </button>
         </div>
       </div>
 
