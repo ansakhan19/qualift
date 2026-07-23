@@ -417,7 +417,7 @@ export default function EligibilityFlow({ onComplete }) {
   }
 
   function handleComplete() {
-    advanceStage(2)
+    advanceStage(3)
     onComplete()
   }
 
