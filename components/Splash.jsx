@@ -20,7 +20,7 @@ export default function Splash({ onStart, onReturnEmail }) {
       if (!r.ok) throw new Error()
       setSent(true)
     } catch {
-      setError('Something went wrong — try again')
+      setError('Something went wrong, try again')
     } finally {
       setSending(false)
     }
@@ -39,10 +39,10 @@ export default function Splash({ onStart, onReturnEmail }) {
           Let's get you 50% off every subway and bus ride
         </h1>
         <p className="text-sm text-gray-500 leading-relaxed max-w-xs mb-4">
-          Answer a few questions — about 10 minutes. We'll tell you if you qualify and walk you through the whole application.
+          Answer a few questions, about 10 minutes. We'll tell you if you qualify and walk you through the whole application.
         </p>
 
-        {/* Savings — the TurboTax hook */}
+        {/* Savings, the TurboTax hook */}
         <div className="inline-flex items-center gap-2.5 bg-teal-50 rounded-full px-5 py-2.5 mb-5">
           <i className="ti ti-coin text-teal-600 text-lg" />
           <span className="text-sm text-teal-800">
@@ -89,7 +89,7 @@ export default function Splash({ onStart, onReturnEmail }) {
           </p>
           {sent ? (
             <div className="flex items-center gap-2 text-teal-700 text-xs font-medium bg-teal-50 rounded-lg px-3 py-2">
-              <i className="ti ti-check" /> Link sent — check your inbox
+              <i className="ti ti-check" /> Link sent, check your inbox
             </div>
           ) : (
             <form onSubmit={handleReturn} className="flex gap-2">

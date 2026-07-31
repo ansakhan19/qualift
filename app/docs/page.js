@@ -16,7 +16,7 @@ export default function Page() {
             <p className="text-xs text-gray-400">Stage 4 of 8</p>
           </div>
         </div>
-        <div className="max-w-2xl mx-auto"><DocCollection /></div>
+        <div className="w-full px-0 md:px-16 lg:px-32"><DocCollection /></div>
       </div>
     </ProgressProvider>
   )

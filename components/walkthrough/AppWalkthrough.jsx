@@ -4,12 +4,12 @@ import { useRouter } from 'next/navigation'
 import { useProgress } from '@/store/ProgressContext'
 
 /**
- * Application guide — mirrors the real ACCESS HRA Fair Fares application
+ * Application guide, mirrors the real ACCESS HRA Fair Fares application
  * (per the official ACCESS HRA User Guide, 2026).
  *
  * Design: two panels.
- *  LEFT  — "The real screen": a mockup of what ACCESS HRA shows at this step.
- *  RIGHT — "Your cheat sheet": your answers, ready to copy into the real form.
+ *  LEFT , "The real screen": a mockup of what ACCESS HRA shows at this step.
+ *  RIGHT, "Your cheat sheet": your answers, ready to copy into the real form.
  * On mobile the panels stack. One place to edit, one place to look.
  */
 
@@ -165,7 +165,7 @@ export default function AppWalkthrough() {
     {
       title: 'Create your ACCESS HRA account',
       mock: (
-        <ScreenMock title="Create Account — ACCESS HRA">
+        <ScreenMock title="Create Account, ACCESS HRA">
           <MockField label="Email or username" value={app.email} hint="you@email.com" />
           <MockField label="Password" hint="Choose a password" />
           <MockField label="Security question" hint="Pick one about yourself" />
@@ -183,7 +183,7 @@ export default function AppWalkthrough() {
           </InfoCard>
           <AnswerRow label="EMAIL FOR YOUR ACCOUNT" value={app.email} onChange={v => u({ email: v })}
             placeholder="you@email.com" type="email"
-            tip="Use an email you check often — HRA sends application updates here." />
+            tip="Use an email you check often, HRA sends application updates here." />
         </>
       ),
     },
@@ -240,7 +240,7 @@ export default function AppWalkthrough() {
               { value: 'true', label: 'Same as residence', sub: 'Your OMNY card is mailed here' },
               { value: 'false', label: 'Different mailing address', sub: "You'll enter it on the real form" },
             ]}
-            tip="Make sure you can receive mail there — your Fair Fares OMNY card arrives by mail." />
+            tip="Make sure you can receive mail there, your Fair Fares OMNY card arrives by mail." />
         </>
       ),
     },
@@ -256,7 +256,7 @@ export default function AppWalkthrough() {
         <>
           <AnswerRow label="PHONE NUMBER" value={app.phone} onChange={v => u({ phone: v })}
             placeholder="(212) 555-0100" type="tel"
-            tip="HRA may call or text about your application — answer unknown numbers while it's under review." />
+            tip="HRA may call or text about your application, answer unknown numbers while it's under review." />
           <AnswerRow label="EMAIL ADDRESS" value={app.email} onChange={v => u({ email: v })}
             placeholder="you@email.com" type="email" refNote="Status updates and e-notices arrive here" />
         </>
@@ -269,21 +269,21 @@ export default function AppWalkthrough() {
           <p className="text-xs text-gray-600 leading-relaxed mb-3">
             "Would you like to use an authentication service to verify your identity, age and address?"
           </p>
-          <div className="border border-teal-400 bg-teal-50 rounded-lg px-3 py-2 text-sm text-gray-900 mb-2">◉ Yes — verify me electronically</div>
-          <div className="border border-gray-300 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-400">○ No — I'll upload documents instead</div>
+          <div className="border border-teal-400 bg-teal-50 rounded-lg px-3 py-2 text-sm text-gray-900 mb-2">◉ Yes, verify me electronically</div>
+          <div className="border border-gray-300 bg-gray-50 rounded-lg px-3 py-2 text-sm text-gray-400">○ No, I'll upload documents instead</div>
         </ScreenMock>
       ),
       guide: (
         <>
           <InfoCard tone="purple" title="Answer YES if you can">
             <p className="text-sm text-gray-600 leading-relaxed">
-              Successful electronic verification means <strong>fewer documents to upload</strong> — often just proof of income.
+              Successful electronic verification means <strong>fewer documents to upload</strong>, often just proof of income.
               With an <strong>IDNYC card number</strong> it verifies identity, age, AND address instantly. No IDNYC? The portal can verify via your cell phone number.
             </p>
           </InfoCard>
           <ChoiceRow label="DO YOU HAVE AN IDNYC CARD?" value={app.hasIdnyc || ''} onChange={v => u({ hasIdnyc: v })}
             options={[
-              { value: 'yes', label: 'Yes — I have IDNYC', sub: 'Have your card number ready (front of card)' },
+              { value: 'yes', label: 'Yes, I have IDNYC', sub: 'Have your card number ready (front of card)' },
               { value: 'no', label: 'No IDNYC', sub: 'Choose phone verification, or upload documents' },
             ]} />
         </>
@@ -304,7 +304,7 @@ export default function AppWalkthrough() {
           <SelectRow label="HOUSEHOLD SIZE" value={String(app.householdSize || '')} onChange={v => u({ householdSize: v })}
             options={[
               { value: '', label: 'Select…' },
-              { value: '1', label: '1 — Just me' },
+              { value: '1', label: '1, Just me' },
               { value: '2', label: '2 people' },
               { value: '3', label: '3 people' },
               { value: '4', label: '4 people' },
@@ -320,7 +320,7 @@ export default function AppWalkthrough() {
           <ChoiceRow label="DO YOU RECEIVE SNAP OR CASH ASSISTANCE?" value={String(app.hasHRABenefits)} onChange={v => u({ hasHRABenefits: v === 'true' })}
             options={[
               { value: 'false', label: 'No' },
-              { value: 'true', label: 'Yes', sub: 'Your income is already verified — look for the fast-track "Enroll Now" alert' },
+              { value: 'true', label: 'Yes', sub: 'Your income is already verified, look for the fast-track "Enroll Now" alert' },
             ]} />
         </>
       ),
@@ -328,7 +328,7 @@ export default function AppWalkthrough() {
     ...(isIntl ? [{
       title: 'For international students',
       mock: (
-        <ScreenMock title="Good news — no visa questions">
+        <ScreenMock title="Good news, no visa questions">
           <p className="text-xs text-gray-600 leading-relaxed">
             The real application never asks your visa type or SEVIS ID. Fair Fares is open regardless of immigration status.
           </p>
@@ -345,7 +345,7 @@ export default function AppWalkthrough() {
           </InfoCard>
           <InfoCard tone="purple">
             <p className="text-xs text-purple-800 leading-relaxed">
-              <strong>Public charge:</strong> Fair Fares is a city transit discount, not a federal benefit — it does not affect visa renewals or future immigration applications.
+              <strong>Public charge:</strong> Fair Fares is a city transit discount, not a federal benefit, it does not affect visa renewals or future immigration applications.
             </p>
           </InfoCard>
         </>
@@ -354,7 +354,7 @@ export default function AppWalkthrough() {
     {
       title: 'Submit & upload documents',
       mock: (
-        <ScreenMock title="Confirmation — Application Submitted">
+        <ScreenMock title="Confirmation, Application Submitted">
           <div className="bg-teal-50 border border-teal-400 rounded-lg px-3 py-2 mb-3">
             <p className="text-sm font-medium text-teal-800">✓ Your application has been submitted</p>
             <p className="text-xs text-teal-700 mt-0.5">Application ID: FF-XXXXXXXX</p>
@@ -369,8 +369,8 @@ export default function AppWalkthrough() {
             <ol className="text-sm text-gray-500 leading-relaxed list-decimal ml-4 flex flex-col gap-1.5">
               <li><strong className="text-gray-800">Write down your Application ID</strong> from the confirmation page</li>
               <li>Click "YES, see my required documents"</li>
-              <li>Upload documents with the <strong className="text-gray-800">ACCESS HRA Mobile app</strong> — uploads only work through the app</li>
-              <li>Upload within <strong className="text-gray-800">10 calendar days</strong> — your Qualift documents are exactly what's needed</li>
+              <li>Upload documents with the <strong className="text-gray-800">ACCESS HRA Mobile app</strong>, uploads only work through the app</li>
+              <li>Upload within <strong className="text-gray-800">10 calendar days</strong>, your Qualift documents are exactly what's needed</li>
               <li>Decision in ~30 days; your OMNY card arrives by mail</li>
             </ol>
           </InfoCard>
@@ -428,7 +428,7 @@ export default function AppWalkthrough() {
           <i className="ti ti-lock text-purple-600 text-base flex-shrink-0 mt-0.5" />
           <p className="text-xs text-purple-800 leading-relaxed">
             <strong>Your answers stay on this device.</strong> We never store your personal application
-            info — it disappears when you close this tab. Can't finish on the spot? Download your
+            info, it disappears when you close this tab. Can't finish on the spot? Download your
             cheat sheet PDF at the end and complete the application later.
           </p>
         </div>
@@ -441,7 +441,7 @@ export default function AppWalkthrough() {
           {section.mock}
         </div>
         <div>
-          <p className="text-xs font-semibold tracking-wide text-gray-400 mb-2">YOUR CHEAT SHEET — EDIT & COPY</p>
+          <p className="text-xs font-semibold tracking-wide text-gray-400 mb-2">YOUR CHEAT SHEET, EDIT & COPY</p>
           <div className="flex flex-col gap-3">
             {section.guide}
           </div>
@@ -458,7 +458,7 @@ export default function AppWalkthrough() {
         )}
         <button onClick={next}
           className="flex-1 bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3 text-sm font-medium transition-colors">
-          {step === total - 1 ? 'Finish — get my PDF guide →' : 'Next step →'}
+          {step === total - 1 ? 'Finish, get my PDF guide →' : 'Next step →'}
         </button>
       </div>
     </div>

@@ -13,7 +13,7 @@ const INELIG = {
   },
   age: {
     title: 'Fair Fares is for New Yorkers aged 18 through 64',
-    reason: "If you're under 18, you may be eligible for free student fares through your school. If you're 65 or older, the MTA Reduced-Fare program gives you the same 50% discount — apply at mta.info/fares.",
+    reason: "If you're under 18, you may be eligible for free student fares through your school. If you're 65 or older, the MTA Reduced-Fare program gives you the same 50% discount, apply at mta.info/fares.",
     tag: 'Age requirement not met',
   },
   existing: {
@@ -35,14 +35,14 @@ const ORGS = {
   ],
   age: [
     { name: 'NYC DOE student fares', desc: "Enrolled in a NYC school? You may qualify for free student fares through your school.", tag: 'For students under 18' },
-    { name: 'MTA Reduced-Fare (65+)', desc: 'New Yorkers 65 and older get the same 50% discount through the MTA — no income requirement.', tag: 'For seniors 65+' },
+    { name: 'MTA Reduced-Fare (65+)', desc: 'New Yorkers 65 and older get the same 50% discount through the MTA, no income requirement.', tag: 'For seniors 65+' },
     { name: 'ACCESS NYC', desc: 'Find youth-specific benefit programs for New Yorkers under 18.', tag: 'Youth benefits' },
   ],
   existing: [
     { name: 'MTA Customer Service', desc: 'Call 511 to understand your current benefit and whether switching to Fair Fares makes sense.', tag: 'MTA help line' },
   ],
   income: [
-    { name: 'ACCESS NYC', desc: 'Check every NYC benefit you may qualify for — housing, food, health, and transit.', tag: 'Benefits navigator', url: 'access.nyc.gov' },
+    { name: 'ACCESS NYC', desc: 'Check every NYC benefit you may qualify for, housing, food, health, and transit.', tag: 'Benefits navigator', url: 'access.nyc.gov' },
     { name: 'NYC 311', desc: 'Call or text 311 to speak with a benefits counselor.', tag: 'Free hotline' },
     { name: 'Met Council', desc: 'Free benefits enrollment help regardless of background.', tag: 'In-person help' },
     { name: 'Legal Aid Society', desc: 'Free legal help for low-income New Yorkers, including benefits appeals.', tag: 'Legal support' },
@@ -96,7 +96,7 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
         )}
         {!note && <div className="mb-3" />}
       </div>
-      <div className="px-5 flex flex-col gap-3">
+      <div className="px-5 grid grid-cols-1 md:grid-cols-2 gap-3">
         {options.map((opt, i) => (
           <button
             key={i}
@@ -152,11 +152,11 @@ function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
       <p className="text-xs text-gray-400 mt-1 mb-6">Question 5 of 5</p>
       <h2 className="text-lg font-medium text-gray-900 mb-2">What is your approximate annual household income?</h2>
       <p className="text-sm text-gray-500 leading-relaxed mb-3">
-        Include income from everyone in your household — yourself, your spouse or partner, and dependents.
+        Include income from everyone in your household, yourself, your spouse or partner, and dependents.
       </p>
       <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 mb-5">
         <p className="text-xs text-purple-700 leading-relaxed">
-          <strong>Roommates don't count.</strong> If you live with roommates who are not related to you and not your dependents, do not include their income — only report your own.
+          <strong>Roommates don't count.</strong> If you live with roommates who are not related to you and not your dependents, do not include their income, only report your own.
         </p>
       </div>
 
@@ -171,7 +171,7 @@ function IncomeSlider({ householdSize, initialIncome, onSubmit, onBack }) {
       </div>
       <div className={`rounded-xl px-4 py-3 text-sm font-medium text-center mb-6 ${under ? 'bg-teal-50 text-teal-800' : 'bg-coral-50 text-coral-800'}`}>
         {under
-          ? `✓ Within the Fair Fares limit of $${limit.toLocaleString()} for a household of ${householdSize} — you may qualify`
+          ? `✓ Within the Fair Fares limit of $${limit.toLocaleString()} for a household of ${householdSize}, you may qualify`
           : `↑ Above the Fair Fares limit of $${limit.toLocaleString()} (200% FPL) for a household of ${householdSize}`}
       </div>
       <button
@@ -191,10 +191,10 @@ function MetroCardReveal({ studentType, onContinue }) {
         <p className="text-xs font-medium tracking-wide text-purple-600 mb-2">
           {studentType === 'international' ? 'INTERNATIONAL STUDENT PATH' : 'NYC RESIDENT PATH'}
         </p>
-        <h2 className="text-lg font-medium text-gray-900 mb-1">Fair Fares — 50% off every ride with OMNY</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-1">Fair Fares, 50% off every ride with OMNY</h2>
         <p className="text-sm text-gray-600 leading-relaxed">
           {studentType === 'international'
-            ? 'As an international student, you can qualify for Fair Fares. It does not trigger public charge — your visa status is safe.'
+            ? 'As an international student, you can qualify for Fair Fares. It does not trigger public charge, your visa status is safe.'
             : 'As an NYC resident, you can qualify for Fair Fares based on your household income.'}
         </p>
       </div>
@@ -211,7 +211,7 @@ function MetroCardReveal({ studentType, onContinue }) {
         </div>
       </div>
       <p className="text-xs text-gray-400 leading-relaxed mb-5 bg-gray-50 rounded-lg px-3 py-2">
-        Fair Fares now uses OMNY — you'll receive an OMNY card, tap to ride, and after 12 paid rides in 7 days the rest of the week is free.
+        Fair Fares now uses OMNY, you'll receive an OMNY card, tap to ride, and after 12 paid rides in 7 days the rest of the week is free.
       </p>
       <button
         onClick={onContinue}
@@ -267,7 +267,7 @@ function CashAssistScreen() {
       <div className="w-16 h-16 rounded-full bg-teal-50 border-2 border-teal-400 flex items-center justify-center text-teal-700 text-2xl mx-auto mb-4">
         <i className="ti ti-credit-card" />
       </div>
-      <h2 className="text-xl font-medium text-gray-900 mb-2">Good news — you already qualify for free transit</h2>
+      <h2 className="text-xl font-medium text-gray-900 mb-2">Good news, you already qualify for free transit</h2>
       <p className="text-sm text-gray-500 leading-relaxed mb-6">
         NYC Cash Assistance recipients get full carfare through HRA. You don't need Fair Fares.
       </p>
@@ -281,7 +281,7 @@ function CashAssistScreen() {
       <div className="bg-gray-50 border border-gray-200 rounded-xl p-4 text-left">
         <p className="text-sm font-medium text-gray-900 mb-2">Can't access online? Visit HRA in person</p>
         <p className="text-sm text-gray-500 leading-relaxed">
-          Bring your EBT card and case number to any HRA Benefits Access Center — staff can issue or reactivate your transit benefit on the spot.
+          Bring your EBT card and case number to any HRA Benefits Access Center, staff can issue or reactivate your transit benefit on the spot.
         </p>
       </div>
     </div>
@@ -302,7 +302,7 @@ function EligibleScreen({ progress, onContinue, onStartFresh }) {
         <p className="text-xs font-medium tracking-wide text-purple-600 mb-2">YOUR ELIGIBILITY SUMMARY</p>
         {[
           ['NYC resident', '✓ Yes'],
-          ['Age 18–64', '✓ Yes'],
+          ['Age 18 to 64', '✓ Yes'],
           ['Household size', `${eligibility.householdSize || 1} ${(eligibility.householdSize || 1) === 1 ? 'person' : 'people'}`],
           ['Annual income', `$${(eligibility.annualIncome || 0).toLocaleString()}`],
           [`Fair Fares limit (200% FPL, ${eligibility.householdSize || 1}-person)`, `$${limit.toLocaleString()}`],
@@ -364,7 +364,7 @@ export default function EligibilityFlow({ onComplete }) {
   const { progress, updateEligibility, setProgress, advanceStage, reset } = useProgress()
   const router = useRouter()
 
-  // Full wipe — for shared devices at events. Clears data AND returns to first screen.
+  // Full wipe, for shared devices at events. Clears data AND returns to first screen.
   function handleStartFresh() {
     reset()
     setIneligReason(null)
@@ -449,8 +449,8 @@ export default function EligibilityFlow({ onComplete }) {
       </p>
       <div className="flex flex-col gap-3">
         {[
-          { label: "Yes — I'm an international student", sub: 'F-1, J-1, or other student visa', val: 'international' },
-          { label: "No — I'm an NYC resident", sub: 'US citizen, green card, or other status', val: 'domestic' },
+          { label: "Yes, I'm an international student", sub: 'F-1, J-1, or other student visa', val: 'international' },
+          { label: "No, I'm an NYC resident", sub: 'US citizen, green card, or other status', val: 'domestic' },
         ].map(o => (
           <button key={o.val} onClick={() => handleStudentType(o.val)}
             className={`text-left border rounded-xl p-4 transition-all ${
@@ -499,7 +499,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_age') return (
     <Question step={1} total={Q_TOTAL}
       question="Are you between 18 and 64 years old?"
-      sub="Fair Fares is for ages 18–64. Under 18? Your school may provide free student fares. 65+? The MTA Reduced-Fare program offers the same 50% discount."
+      sub="Fair Fares is for ages 18 to 64. Under 18? Your school may provide free student fares. 65+? The MTA Reduced-Fare program offers the same 50% discount."
       options={[
         { label: "Yes, I'm 18 to 64", value: true },
         { label: "No, I'm under 18 or 65+", value: false },
@@ -513,7 +513,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_cashAssist') return (
     <Question step={2} total={Q_TOTAL}
       question="Are you currently receiving Cash Assistance from HRA?"
-      sub="Cash Assistance (Public Assistance) recipients already get full carfare from HRA — you may not need Fair Fares at all."
+      sub="Cash Assistance (Public Assistance) recipients already get full carfare from HRA, you may not need Fair Fares at all."
       options={[
         { label: "No, I don't receive Cash Assistance", value: false },
         { label: 'Yes, I receive Cash Assistance', value: true },
@@ -527,7 +527,7 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_existing') return (
     <Question step={3} total={Q_TOTAL}
       question="Do you currently have an MTA Reduced-Fare or OMNY reduced-fare benefit?"
-      sub="This is the senior or disability transit discount — not a regular OMNY card or MetroCard. Most people select No."
+      sub="This is the senior or disability transit discount, not a regular OMNY card or MetroCard. Most people select No."
       options={[
         { label: "No, I don't have a reduced-fare benefit", value: false },
         { label: 'Yes, I have an existing reduced-fare benefit', value: true },
@@ -541,10 +541,10 @@ export default function EligibilityFlow({ onComplete }) {
   if (screen === 'q_household') return (
     <Question step={4} total={Q_TOTAL}
       question="How many people are in your household?"
-      sub="Count only yourself and people you financially support — a spouse, partner, or children in your care."
-      note="Roommates and housemates who are not related to you and not financially dependent on you are NOT part of your household. Do not count them — even if you share an apartment."
+      sub="Count only yourself and people you financially support, a spouse, partner, or children in your care."
+      note="Roommates and housemates who are not related to you and not financially dependent on you are NOT part of your household. Do not count them, even if you share an apartment."
       options={[1,2,3,4,5].map(n => ({
-        label: n === 1 ? '1 — Just me' : `${n} people`,
+        label: n === 1 ? '1, Just me' : `${n} people`,
         value: n,
       }))}
       selectedValue={e.householdSize}

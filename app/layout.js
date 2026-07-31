@@ -1,8 +1,8 @@
 import './globals.css'
 
 export const metadata = {
-  title: 'Qualift — Fair Fares Application Readiness',
-  description: 'Get step-by-step help applying for NYC Fair Fares — a 50% discount on subway and bus fares for income-eligible New Yorkers.',
+  title: 'Qualift, Fair Fares Application Readiness',
+  description: 'Get step-by-step help applying for NYC Fair Fares, a 50% discount on subway and bus fares for income-eligible New Yorkers.',
 }
 
 export default function RootLayout({ children }) {

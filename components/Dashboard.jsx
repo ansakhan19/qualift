@@ -5,7 +5,7 @@ import SavingsTicker from '@/components/SavingsTicker'
 
 const STAGES = [
   { n: 1, icon: 'ti-user',             label: 'About you',              sub: p => p.studentType === 'international' ? 'International student' : 'NYC resident' },
-  { n: 2, icon: 'ti-shield-check',     label: 'Do I qualify?',          sub: p => p.eligibility?.status === 'eligible' ? 'Yes — income within the limit' : 'Pending' },
+  { n: 2, icon: 'ti-shield-check',     label: 'Do I qualify?',          sub: p => p.eligibility?.status === 'eligible' ? 'Yes, income within the limit' : 'Pending' },
   { n: 3, icon: 'ti-list-check',       label: 'Your document list',     sub: p => `${docTotal(p)} documents needed for your profile` },
   { n: 4, icon: 'ti-file-description', label: 'My documents',           sub: p => `${docDone(p)} of ${docTotal(p)} collected` },
   { n: 5, icon: 'ti-checklist',        label: 'All docs ready',         sub: () => 'Continue when everything is collected' },
@@ -80,18 +80,18 @@ export default function Dashboard() {
         </div>
       </div>
 
-      {/* Celebration — you're in */}
+      {/* Celebration, you're in */}
       {isEligible && (
         <div className="mx-5 mt-4 bg-teal-50 rounded-xl p-4 flex items-center gap-3.5">
           <div className="w-11 h-11 rounded-full bg-teal-400 flex items-center justify-center flex-shrink-0">
             <i className="ti ti-confetti text-white text-xl" />
           </div>
           <div className="flex-1">
-            <p className="text-sm font-medium text-teal-800">You qualify — nice!</p>
+            <p className="text-sm font-medium text-teal-800">You qualify, nice!</p>
             <p className="text-xs text-teal-600 mt-0.5">
               {done < total
                 ? `${done} of ${total} documents ready. Collect the rest and you can apply today.`
-                : 'Everything is ready — you can apply right now.'}
+                : 'Everything is ready, you can apply right now.'}
             </p>
           </div>
         </div>
@@ -187,7 +187,7 @@ export default function Dashboard() {
         <div className="mx-5 mt-2 bg-purple-50 border border-purple-200 rounded-xl p-3 flex gap-2">
           <i className="ti ti-bulb text-purple-400 text-lg flex-shrink-0 mt-0.5" />
           <p className="text-xs text-purple-800 leading-relaxed">
-            <strong>Up next:</strong> Collect your remaining documents — tap "Document collection" above to continue.
+            <strong>Up next:</strong> Collect your remaining documents, tap "Document collection" above to continue.
           </p>
         </div>
       )}

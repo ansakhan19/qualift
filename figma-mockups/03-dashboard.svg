@@ -1,0 +1,89 @@
+<svg width="1280" height="900" viewBox="0 0 1280 900" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="1280" height="900" fill="#FAF6EF"/>
+  <rect x="240" y="30" width="800" height="840" rx="16" fill="#FFFFFF" stroke="#E7E0D5"/>
+
+  <text x="280" y="76" font-size="11" fill="#A69D8D">Fair Fares readiness</text>
+  <text x="280" y="102" font-size="20" fill="#1E1B2E" font-weight="600" font-family="Bricolage Grotesque, Inter, sans-serif">Pick up where you left off</text>
+
+  <rect x="700" y="66" width="200" height="36" rx="18" fill="#EAF2EB"/>
+  <text x="718" y="88" font-size="11" fill="#4D6E53">Your estimated savings</text>
+  <text x="846" y="89" font-size="14" fill="#3A5440" font-weight="500">$780/yr</text>
+  <rect x="910" y="66" width="90" height="36" rx="9" fill="#FFFFFF" stroke="#E7E0D5"/>
+  <text x="955" y="88" text-anchor="middle" font-size="11" fill="#A69D8D">⟳ Start fresh</text>
+
+  <rect x="280" y="126" width="720" height="72" rx="12" fill="#EAF2EB"/>
+  <circle cx="322" cy="162" r="22" fill="#618B68"/>
+  <path d="M312 158 l6 -8 M322 150 l-4 12 M330 152 l-6 10 M316 168 l14 -4" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <text x="358" y="156" font-size="14" fill="#3A5440" font-weight="500">You qualify, nice!</text>
+  <text x="358" y="176" font-size="12" fill="#4D6E53">2 of 4 documents ready. Collect the rest and you can apply today.</text>
+
+  <rect x="280" y="214" width="720" height="92" rx="12" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="300" y="240" font-size="10.5" fill="#A69D8D" letter-spacing="0.5">APPLICATION READINESS</text>
+  <text x="300" y="262" font-size="13.5" fill="#1E1B2E" font-weight="500">Documents: 2 of 4 collected</text>
+  <rect x="300" y="274" width="680" height="8" rx="4" fill="#E7E0D5"/>
+  <rect x="300" y="274" width="340" height="8" rx="4" fill="#4F46E5"/>
+  <text x="300" y="298" font-size="10.5" fill="#A69D8D">Stage 4 of 8</text>
+  <text x="980" y="298" text-anchor="end" font-size="10.5" fill="#4338CA" font-weight="500">In progress</text>
+
+  <rect x="280" y="322" width="720" height="48" rx="12" fill="#4F46E5"/>
+  <text x="640" y="351" text-anchor="middle" font-size="14" fill="#FFFFFF" font-weight="500">Continue → My documents</text>
+
+  <text x="280" y="404" font-size="10.5" fill="#A69D8D" letter-spacing="0.5">YOUR JOURNEY</text>
+
+  <circle cx="302" cy="436" r="13" fill="#618B68"/>
+  <path d="M296 436 l5 5 8 -10" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <rect x="330" y="418" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="348" y="443" font-size="13" fill="#1E1B2E" font-weight="500">About you</text>
+  <rect x="912" y="428" width="70" height="22" rx="11" fill="#EAF2EB"/>
+  <text x="947" y="443" text-anchor="middle" font-size="10.5" fill="#3A5440">Done</text>
+
+  <line x1="302" y1="450" x2="302" y2="472" stroke="#618B68" stroke-width="2"/>
+  <circle cx="302" cy="486" r="13" fill="#618B68"/>
+  <path d="M296 486 l5 5 8 -10" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <rect x="330" y="468" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="348" y="493" font-size="13" fill="#1E1B2E" font-weight="500">Do I qualify?   ·   Yes, income within the limit</text>
+  <rect x="912" y="478" width="70" height="22" rx="11" fill="#EAF2EB"/>
+  <text x="947" y="493" text-anchor="middle" font-size="10.5" fill="#3A5440">Done</text>
+
+  <line x1="302" y1="500" x2="302" y2="522" stroke="#618B68" stroke-width="2"/>
+  <circle cx="302" cy="536" r="13" fill="#618B68"/>
+  <path d="M296 536 l5 5 8 -10" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <rect x="330" y="518" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="348" y="543" font-size="13" fill="#1E1B2E" font-weight="500">Your document list</text>
+  <rect x="912" y="528" width="70" height="22" rx="11" fill="#EAF2EB"/>
+  <text x="947" y="543" text-anchor="middle" font-size="10.5" fill="#3A5440">Done</text>
+
+  <line x1="302" y1="550" x2="302" y2="572" stroke="#618B68" stroke-width="2"/>
+  <circle cx="302" cy="596" r="13" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5"/>
+  <text x="302" y="601" text-anchor="middle" font-size="11" fill="#4338CA" font-weight="500">4</text>
+  <rect x="330" y="568" width="670" height="88" rx="10" fill="#EEF2FF" stroke="#C7D2FE"/>
+  <text x="348" y="593" font-size="13" fill="#1E1B2E" font-weight="500">My documents   ·   2 of 4 collected</text>
+  <rect x="880" y="578" width="102" height="22" rx="11" fill="#4F46E5"/>
+  <text x="931" y="593" text-anchor="middle" font-size="10.5" fill="#FFFFFF">In progress</text>
+  <rect x="348" y="610" width="82" height="24" rx="12" fill="#EAF2EB"/>
+  <text x="389" y="626" text-anchor="middle" font-size="10.5" fill="#3A5440">✓ Photo ID</text>
+  <rect x="438" y="610" width="102" height="24" rx="12" fill="#EAF2EB"/>
+  <text x="489" y="626" text-anchor="middle" font-size="10.5" fill="#3A5440">✓ NYC address</text>
+  <rect x="548" y="610" width="112" height="24" rx="12" fill="#FDF3E3"/>
+  <text x="604" y="626" text-anchor="middle" font-size="10.5" fill="#78350F">◷ Income proof</text>
+  <rect x="668" y="610" width="66" height="24" rx="12" fill="#FDF3E3"/>
+  <text x="701" y="626" text-anchor="middle" font-size="10.5" fill="#78350F">◷ I-20</text>
+
+  <line x1="302" y1="610" x2="302" y2="656" stroke="#E7E0D5" stroke-width="2"/>
+  <circle cx="302" cy="684" r="13" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="302" y="689" text-anchor="middle" font-size="11" fill="#A69D8D">5</text>
+  <rect x="330" y="666" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#F3EDE1"/>
+  <text x="348" y="691" font-size="13" fill="#7C7365">All docs ready</text>
+  <rect x="906" y="676" width="76" height="22" rx="11" fill="#F3EDE1"/>
+  <text x="944" y="691" text-anchor="middle" font-size="10.5" fill="#7C7365">Up next</text>
+
+  <circle cx="302" cy="734" r="13" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="302" y="739" text-anchor="middle" font-size="11" fill="#A69D8D">7</text>
+  <rect x="330" y="716" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#F3EDE1"/>
+  <text x="348" y="741" font-size="13" fill="#7C7365">Apply on ACCESS HRA   ·   copy-paste cheat sheet, step by step</text>
+
+  <circle cx="302" cy="784" r="13" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="302" y="789" text-anchor="middle" font-size="11" fill="#A69D8D">8</text>
+  <rect x="330" y="766" width="670" height="40" rx="10" fill="#FAF6EF" stroke="#F3EDE1"/>
+  <text x="348" y="791" font-size="13" fill="#7C7365">Ride for less   ·   your PDF guide + OMNY card by mail</text>
+</svg>

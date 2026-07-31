@@ -43,7 +43,7 @@ function EligibilityPage() {
       <div className="flex flex-1 items-stretch">
         <JourneyRail active={railSection} />
         <div className="flex-1 min-w-0">
-          <div className="max-w-2xl mx-auto">
+          <div className="w-full px-0 md:px-12 lg:px-24">
             <EligibilityFlow onComplete={() => router.push('/dashboard')} />
           </div>
         </div>

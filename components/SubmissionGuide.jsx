@@ -13,7 +13,7 @@ const INCOME_LABELS = {
   alimony: 'Alimony / child support',
 }
 
-// Fair Fares now issues OMNY cards — $1.50/ride (50% off $3.00), weekly cap $17.50
+// Fair Fares now issues OMNY cards, $1.50/ride (50% off $3.00), weekly cap $17.50
 
 function Section({ title, rows }) {
   return (
@@ -55,9 +55,9 @@ export default function SubmissionGuide() {
       })
       const data = await res.json()
       if (data.ok) { setSendState('sent') }
-      else { setSendState('error'); setSendError(data.error || 'Email failed — you can still download the PDF above') }
+      else { setSendState('error'); setSendError(data.error || 'Email failed, you can still download the PDF above') }
     } catch {
-      setSendState('error'); setSendError('Network error — you can still download the PDF above')
+      setSendState('error'); setSendError('Network error, you can still download the PDF above')
     }
   }
 
@@ -90,16 +90,16 @@ export default function SubmissionGuide() {
 
   const uploadDocs = isIntl
     ? [
-        ['1 — Proof of identity', 'Passport', 'Upload both photo page + info page'],
-        ['2 — Proof of address', 'Lease / utility bill', 'First page, must show your name'],
-        ['3 — Proof of income', INCOME_LABELS[a?.incomeSource] || 'See your documents', 'Full document — all pages'],
-        ['4 — I-20 form', 'I-20 (both pages)', 'Single PDF, both sides'],
+        ['1, Proof of identity', 'Passport', 'Upload both photo page + info page'],
+        ['2, Proof of address', 'Lease / utility bill', 'First page, must show your name'],
+        ['3, Proof of income', INCOME_LABELS[a?.incomeSource] || 'See your documents', 'Full document, all pages'],
+        ['4, I-20 form', 'I-20 (both pages)', 'Single PDF, both sides'],
       ]
     : [
-        ['1 — Proof of identity', 'State ID / passport', 'Upload the front side clearly'],
-        ['2 — Proof of address', 'Lease / utility bill', 'First page, must show your name'],
-        ['3 — Proof of income', INCOME_LABELS[a?.incomeSource] || 'See your documents', 'Full document — all pages'],
-        ['4 — Social Security Number', 'Provide your SSN number in the field', 'No card upload required'],
+        ['1, Proof of identity', 'State ID / passport', 'Upload the front side clearly'],
+        ['2, Proof of address', 'Lease / utility bill', 'First page, must show your name'],
+        ['3, Proof of income', INCOME_LABELS[a?.incomeSource] || 'See your documents', 'Full document, all pages'],
+        ['4, Social Security Number', 'Provide your SSN number in the field', 'No card upload required'],
       ]
 
   return (
@@ -123,7 +123,7 @@ export default function SubmissionGuide() {
           ['Legal first name', a?.firstName],
           ['Legal last name', a?.lastName],
           ['Date of birth', a?.dob],
-          ['SSN / ITIN', a?.ssn || (isIntl ? 'Leave blank (F-1 visa)' : '— required')],
+          ['SSN / ITIN', a?.ssn || (isIntl ? 'Leave blank (F-1 visa)' : '- required')],
           ['Phone', a?.phone],
           ['Email', a?.email],
         ]} />
@@ -136,19 +136,19 @@ export default function SubmissionGuide() {
 
         <Section title="INCOME" rows={[
           ['Income source', INCOME_LABELS[a?.incomeSource] || a?.incomeSource],
-          ['Annual household income', a?.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null, 'Before taxes — must match your document'],
+          ['Annual household income', a?.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null, 'Before taxes, must match your document'],
           ['Household size', a?.householdSize ? `${a.householdSize} ${a.householdSize == 1 ? 'person' : 'people'}` : null, "Roommates don't count"],
         ]} />
 
         <Section title="YOUR DISCOUNT (OMNY)" rows={[
           ['Per ride', '$1.50 (normally $3.00)'],
-          ['Weekly fare cap', '$17.50 — after 12 paid rides in 7 days, the rest is free'],
+          ['Weekly fare cap', '$17.50, after 12 paid rides in 7 days, the rest is free'],
           ['Card', 'OMNY card mailed to you after approval'],
         ]} />
 
         <Section title="DOCUMENTS TO UPLOAD" rows={uploadDocs} />
 
-        {/* Download PDF — works without email */}
+        {/* Download PDF, works without email */}
         <button
           onClick={handleDownloadPdf}
           disabled={dlState === 'downloading'}
@@ -159,7 +159,7 @@ export default function SubmissionGuide() {
           }`}
         >
           <i className={`ti ${dlState === 'downloading' ? 'ti-loader animate-spin' : 'ti-download'}`} />
-          {dlState === 'downloading' ? 'Generating PDF…' : dlState === 'error' ? 'Failed — tap to retry' : 'Download my guide as a PDF'}
+          {dlState === 'downloading' ? 'Generating PDF…' : dlState === 'error' ? 'Failed, tap to retry' : 'Download my guide as a PDF'}
         </button>
         {dlError && <p className="text-xs text-coral-600 text-center -mt-2">{dlError}</p>}
 
@@ -182,7 +182,7 @@ export default function SubmissionGuide() {
               : sendState === 'sending'
               ? 'Generating your guide…'
               : sendState === 'error'
-              ? 'Failed — tap to retry'
+              ? 'Failed, tap to retry'
               : 'Email me this guide as a PDF'}
           </button>
         )}

@@ -1,0 +1,62 @@
+<svg width="1280" height="740" viewBox="0 0 1280 740" xmlns="http://www.w3.org/2000/svg" font-family="Inter, sans-serif">
+  <rect width="1280" height="740" fill="#FAF6EF"/>
+  <rect x="100" y="30" width="1080" height="680" rx="16" fill="#FFFFFF" stroke="#E7E0D5"/>
+
+  <text x="130" y="72" font-size="14" fill="#4338CA" font-weight="500">← Dashboard</text>
+  <line x1="242" y1="56" x2="242" y2="80" stroke="#E7E0D5"/>
+  <text x="258" y="72" font-size="14" fill="#1E1B2E" font-weight="500">Do I qualify?</text>
+
+  <rect x="830" y="48" width="216" height="36" rx="18" fill="#EAF2EB"/>
+  <text x="850" y="70" font-size="11" fill="#4D6E53">Your estimated savings</text>
+  <text x="988" y="71" font-size="14" fill="#3A5440" font-weight="500">$780/yr</text>
+  <rect x="1058" y="48" width="94" height="36" rx="9" fill="#FFFFFF" stroke="#E7E0D5"/>
+  <text x="1105" y="70" text-anchor="middle" font-size="11" fill="#A69D8D">⟳ Start fresh</text>
+
+  <line x1="100" y1="100" x2="1180" y2="100" stroke="#E7E0D5"/>
+
+  <rect x="100" y="100" width="220" height="610" fill="#FAF6EF"/>
+  <line x1="320" y1="100" x2="320" y2="710" stroke="#E7E0D5"/>
+
+  <circle cx="140" cy="142" r="10" fill="#618B68"/>
+  <path d="M135 142 l4 4 7 -8" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+  <text x="162" y="147" font-size="12.5" fill="#5C5548">About you</text>
+
+  <rect x="120" y="168" width="200" height="40" fill="#EEF2FF"/>
+  <rect x="317" y="168" width="3" height="40" fill="#4F46E5"/>
+  <circle cx="140" cy="188" r="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="2.5"/>
+  <text x="162" y="193" font-size="12.5" fill="#3730A3" font-weight="500">Do I qualify?</text>
+
+  <circle cx="140" cy="234" r="10" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="162" y="239" font-size="12.5" fill="#A69D8D">My documents</text>
+  <circle cx="140" cy="280" r="10" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="162" y="285" font-size="12.5" fill="#A69D8D">Apply</text>
+  <circle cx="140" cy="326" r="10" fill="#FFFFFF" stroke="#D8CFC0"/>
+  <text x="162" y="331" font-size="12.5" fill="#A69D8D">Ride for less</text>
+
+  <rect x="400" y="140" width="700" height="6" rx="3" fill="#F3EDE1"/>
+  <rect x="400" y="140" width="560" height="6" rx="3" fill="#4F46E5"/>
+  <text x="400" y="168" font-size="11" fill="#A69D8D">Question 4 of 5 · almost there</text>
+
+  <text x="400" y="210" font-size="21" fill="#1E1B2E" font-weight="600" font-family="Bricolage Grotesque, Inter, sans-serif">How many people are in your household?</text>
+  <text x="400" y="238" font-size="13.5" fill="#7C7365">Count only yourself and people you financially support, a spouse, partner, or children in your care.</text>
+
+  <rect x="400" y="258" width="700" height="58" rx="12" fill="#FDF3E3"/>
+  <text x="420" y="282" font-size="12" fill="#78350F" font-weight="500">Roommates don't count.</text>
+  <text x="420" y="300" font-size="12" fill="#78350F">Housemates not related to you and not financially dependent on you are NOT part of your household.</text>
+
+  <rect x="400" y="336" width="700" height="52" rx="12" fill="#EEF2FF" stroke="#4F46E5" stroke-width="2"/>
+  <text x="424" y="367" font-size="13.5" fill="#1E1B2E" font-weight="500">1, Just me</text>
+  <circle cx="1072" cy="362" r="10" fill="#4F46E5"/>
+  <path d="M1067 362 l4 4 7 -8" stroke="#FFFFFF" stroke-width="2" fill="none"/>
+
+  <rect x="400" y="398" width="700" height="52" rx="12" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="424" y="429" font-size="13.5" fill="#1E1B2E">2 people</text>
+  <rect x="400" y="460" width="700" height="52" rx="12" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="424" y="491" font-size="13.5" fill="#1E1B2E">3 people</text>
+  <rect x="400" y="522" width="700" height="52" rx="12" fill="#FAF6EF" stroke="#E7E0D5"/>
+  <text x="424" y="553" font-size="13.5" fill="#1E1B2E">4 people</text>
+
+  <text x="400" y="632" font-size="13" fill="#7C7365">← Back</text>
+  <rect x="880" y="606" width="220" height="46" rx="12" fill="#4F46E5"/>
+  <text x="990" y="634" text-anchor="middle" font-size="14" fill="#FFFFFF" font-weight="500">Continue →</text>
+</svg>

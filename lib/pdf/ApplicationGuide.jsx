@@ -83,7 +83,7 @@ const INCOME_LABELS = {
   alimony: 'Alimony / child support',
 }
 
-// Fair Fares now issues OMNY cards — $1.50/ride (50% off $3.00), $17.50 weekly fare cap
+// Fair Fares now issues OMNY cards, $1.50/ride (50% off $3.00), $17.50 weekly fare cap
 
 function Step({ n, title, desc, link }) {
   return (
@@ -102,7 +102,7 @@ function FieldRow({ label, value, note }) {
   return (
     <View style={s.fieldRow}>
       <Text style={s.fieldName}>{label}</Text>
-      <Text style={s.fieldVal}>{value || '—'}</Text>
+      <Text style={s.fieldVal}>{value || '-'}</Text>
       {note ? <Text style={s.fieldNote}>{note}</Text> : <Text style={s.fieldNote} />}
     </View>
   )
@@ -116,19 +116,19 @@ export function buildApplicationGuide(progress) {
   const uploadDocs = isIntl
     ? [
         { name: 'Government-issued photo ID', src: 'Passport (photo page + info page)' },
-        { name: 'Proof of NYC address', src: 'Lease or utility bill — first page' },
+        { name: 'Proof of NYC address', src: 'Lease or utility bill, first page' },
         { name: 'Proof of income', src: INCOME_LABELS[a.incomeSource] || 'See your collected document' },
         { name: 'I-20 form', src: 'Both pages as a single PDF' },
       ]
     : [
         { name: 'Government-issued photo ID', src: 'State ID or passport (front side)' },
-        { name: 'Proof of NYC address', src: 'Lease or utility bill — first page' },
+        { name: 'Proof of NYC address', src: 'Lease or utility bill, first page' },
         { name: 'Proof of income', src: INCOME_LABELS[a.incomeSource] || 'See your collected document' },
-        { name: 'Social Security Number', src: 'Enter number directly — no card upload' },
+        { name: 'Social Security Number', src: 'Enter number directly, no card upload' },
       ]
 
   return (
-    <Document title="Qualift — Fair Fares Application Guide" author="Qualift">
+    <Document title="Qualift, Fair Fares Application Guide" author="Qualift">
       <Page size="A4" style={s.page}>
 
         {/* Header */}
@@ -149,7 +149,7 @@ export function buildApplicationGuide(progress) {
           </View>
           <View style={s.infoItem}>
             <Text style={s.infoLabel}>Your discount</Text>
-            <Text style={s.infoValue}>OMNY — $1.50/ride (50% off)</Text>
+            <Text style={s.infoValue}>OMNY, $1.50/ride (50% off)</Text>
           </View>
         </View>
 
@@ -158,33 +158,33 @@ export function buildApplicationGuide(progress) {
           {/* Note */}
           <View style={s.noteBox}>
             <Text style={s.noteText}>
-              This guide walks you through the complete Fair Fares application on your phone — from creating your HRA ACCESS account to submitting your documents. Keep this PDF open while you apply. Everything is pre-filled with your information.
+              This guide walks you through the complete Fair Fares application on your phone, from creating your HRA ACCESS account to submitting your documents. Keep this PDF open while you apply. Everything is pre-filled with your information.
             </Text>
           </View>
 
-          {/* Part 1 — Create account */}
-          <Text style={s.sectionTitle}>PART 1 — Create your HRA ACCESS account</Text>
-          <Step n={1} title="Open HRA ACCESS on your phone" desc="Go to a069-access.nyc.gov in your browser. Tap 'Apply Now' on the home screen. The site works on any mobile browser — Chrome or Safari recommended." link={{ label: 'Open HRA ACCESS', url: 'https://a069-access.nyc.gov/accesshra/fairfares' }} />
-          <Step n={2} title="Tap 'Create Account'" desc="On the login page, tap 'Create Account' at the bottom. Do not use a social login — create a new HRA account directly." />
+          {/* Part 1, Create account */}
+          <Text style={s.sectionTitle}>PART 1, Create your HRA ACCESS account</Text>
+          <Step n={1} title="Open HRA ACCESS on your phone" desc="Go to a069-access.nyc.gov in your browser. Tap 'Apply Now' on the home screen. The site works on any mobile browser, Chrome or Safari recommended." link={{ label: 'Open HRA ACCESS', url: 'https://a069-access.nyc.gov/accesshra/fairfares' }} />
+          <Step n={2} title="Tap 'Create Account'" desc="On the login page, tap 'Create Account' at the bottom. Do not use a social login, create a new HRA account directly." />
           <Step n={3} title="Enter your basic info" desc={`Use the exact name on your government ID: ${name || '[your legal name]'}. For email, use the one you have access to on your phone.`} />
           <Step n={4} title="Verify your email" desc="HRA will send a verification code to your email. Open your email app, copy the code, and paste it back into HRA ACCESS. Check spam if it doesn't arrive within 2 minutes." />
-          <Step n={5} title="Set a strong password and save it" desc="Use a password manager (iPhone Keychain, Google Password Manager) to save it — you'll need it for future logins and to check your application status." />
+          <Step n={5} title="Set a strong password and save it" desc="Use a password manager (iPhone Keychain, Google Password Manager) to save it, you'll need it for future logins and to check your application status." />
 
-          {/* Part 2 — Start application */}
-          <Text style={s.sectionTitle}>PART 2 — Start the Fair Fares application</Text>
+          {/* Part 2, Start application */}
+          <Text style={s.sectionTitle}>PART 2, Start the Fair Fares application</Text>
           <Step n={6} title="Go to the Fair Fares portal and tap 'Apply Now'" desc="From nyc.gov/accessfairfares, log in and tap 'Apply Now' on the Fair Fares homepage. If asked to connect an HRA case and you've never received benefits, tap 'Skip'." />
-          <Step n={7} title="Choose where your discount applies" desc="Select 'Subways and eligible buses' — you'll receive an OMNY card with the 50% discount ($1.50 per ride, $17.50 weekly fare cap). Access-A-Ride users can choose that instead." />
+          <Step n={7} title="Choose where your discount applies" desc="Select 'Subways and eligible buses', you'll receive an OMNY card with the 50% discount ($1.50 per ride, $17.50 weekly fare cap). Access-A-Ride users can choose that instead." />
 
-          {/* Part 3 — Fill the form */}
-          <Text style={s.sectionTitle}>PART 3 — Fill in your information</Text>
-          <Text style={{ fontSize: 10, color: C.gray600, marginBottom: 10 }}>Use these exact values — they match your collected documents.</Text>
+          {/* Part 3, Fill the form */}
+          <Text style={s.sectionTitle}>PART 3, Fill in your information</Text>
+          <Text style={{ fontSize: 10, color: C.gray600, marginBottom: 10 }}>Use these exact values, they match your collected documents.</Text>
 
           {/* Personal info */}
           <Text style={{ fontSize: 10, fontFamily: 'Helvetica-Bold', color: C.gray400, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Personal information</Text>
           <FieldRow label="Legal first name" value={a.firstName} note="As on your ID" />
           <FieldRow label="Legal last name" value={a.lastName} note="As on your ID" />
           <FieldRow label="Date of birth" value={a.dob} note="MM/DD/YYYY" />
-          <FieldRow label="SSN / ITIN" value={a.ssn || (isIntl ? 'Leave blank (F-1)' : '— required')} />
+          <FieldRow label="SSN / ITIN" value={a.ssn || (isIntl ? 'Leave blank (F-1)' : '- required')} />
           <FieldRow label="Phone number" value={a.phone} />
           <FieldRow label="Email" value={a.email || email} />
 
@@ -193,13 +193,13 @@ export function buildApplicationGuide(progress) {
           <FieldRow label="Street address" value={a.address} note="From lease" />
           <FieldRow label="Borough" value={a.borough} />
           <FieldRow label="Zip code" value={a.zip} note="From lease" />
-          <FieldRow label="Time at address" value={a.lengthAtAddress === 'lt3' ? 'Less than 3 months' : a.lengthAtAddress === '3to12' ? '3–12 months' : 'More than 1 year'} />
+          <FieldRow label="Time at address" value={a.lengthAtAddress === 'lt3' ? 'Less than 3 months' : a.lengthAtAddress === '3to12' ? '3 to 12 months' : 'More than 1 year'} />
 
         </View>
 
         {/* Footer */}
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>Qualift — Fair Fares Application Guide</Text>
+          <Text style={s.footerText}>Qualift, Fair Fares Application Guide</Text>
           <Text style={s.footerText} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
         </View>
       </Page>
@@ -229,10 +229,10 @@ export function buildApplicationGuide(progress) {
           <FieldRow label="Annual household income" value={a.annualIncome ? `$${parseInt(a.annualIncome).toLocaleString()}` : null} note="≤ 200% FPL" />
           <FieldRow label="Household size" value={a.householdSize ? `${a.householdSize} ${a.householdSize == 1 ? 'person' : 'people'}` : null} />
 
-          {/* Part 4 — Upload docs */}
-          <Text style={s.sectionTitle}>PART 4 — Upload your documents</Text>
+          {/* Part 4, Upload docs */}
+          <Text style={s.sectionTitle}>PART 4, Upload your documents</Text>
           <Step n={8} title="Tap 'Upload Documents' in the application" desc="After filling the form fields, HRA will prompt you to upload supporting documents. Tap 'Add Document' for each one below." />
-          <Step n={9} title="Use your phone's camera to scan each document" desc="Tap the upload button → choose 'Camera' → photograph each document clearly in good lighting. PDFs are preferred — use your Files app to attach pre-saved PDFs." />
+          <Step n={9} title="Use your phone's camera to scan each document" desc="Tap the upload button → choose 'Camera' → photograph each document clearly in good lighting. PDFs are preferred, use your Files app to attach pre-saved PDFs." />
 
           {uploadDocs.map((doc, i) => (
             <View key={i} style={s.docRow}>
@@ -242,16 +242,16 @@ export function buildApplicationGuide(progress) {
             </View>
           ))}
 
-          {/* Part 5 — Submit */}
-          <Text style={s.sectionTitle}>PART 5 — Review and submit</Text>
+          {/* Part 5, Submit */}
+          <Text style={s.sectionTitle}>PART 5, Review and submit</Text>
           <Step n={10} title="Review every section before submitting" desc="Scroll back through the form. Check that your name, address, and income exactly match your uploaded documents. Mismatches are the #1 reason for delays." />
-          <Step n={11} title="Tap 'Submit Application'" desc="Once submitted, you'll receive a confirmation number. Screenshot it — you'll need it to check your status." />
-          <Step n={12} title="Check your application status" desc="Log back into HRA ACCESS anytime to see your status. Processing takes 30–45 days. You may receive a call from an HRA caseworker — answer calls from unknown numbers during this period." />
+          <Step n={11} title="Tap 'Submit Application'" desc="Once submitted, you'll receive a confirmation number. Screenshot it, you'll need it to check your status." />
+          <Step n={12} title="Check your application status" desc="Log back into HRA ACCESS anytime to see your status. Processing takes 30 to 45 days. You may receive a call from an HRA caseworker, answer calls from unknown numbers during this period." />
 
           {/* After submission */}
           <View style={s.noteBox}>
             <Text style={s.noteText}>
-              {'After approval, your Fair Fares OMNY card will be mailed to your address. Tap it at any subway turnstile or bus reader — the 50% discount is automatic. Register your card at omny.info to reload it and track free-ride progress.\n\nQuestions? Call HRA at 718-557-1399 (Mon–Fri, 8am–5pm) or OMNY at 877-789-6669.'}
+              {'After approval, your Fair Fares OMNY card will be mailed to your address. Tap it at any subway turnstile or bus reader, the 50% discount is automatic. Register your card at omny.info to reload it and track free-ride progress.\n\nQuestions? Call HRA at 718-557-1399 (Mon-Fri, 8am-5pm) or OMNY at 877-789-6669.'}
             </Text>
           </View>
 
@@ -262,7 +262,7 @@ export function buildApplicationGuide(progress) {
         </View>
 
         <View style={s.footer} fixed>
-          <Text style={s.footerText}>Qualift — Fair Fares Application Guide</Text>
+          <Text style={s.footerText}>Qualift, Fair Fares Application Guide</Text>
           <Text style={s.footerText} render={({ pageNumber, totalPages }) => `Page ${pageNumber} of ${totalPages}`} />
         </View>
       </Page>

@@ -2,7 +2,7 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import { buildApplicationGuide } from '@/lib/pdf/ApplicationGuide'
 
 /**
- * Generates the personalized Fair Fares guide PDF and returns it directly —
+ * Generates the personalized Fair Fares guide PDF and returns it directly -
  * no email required. The browser downloads it as a file.
  */
 export async function POST(req) {

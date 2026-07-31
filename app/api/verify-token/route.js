@@ -16,7 +16,7 @@ export async function GET(req) {
   }
 
   if (session.token_expires_at < Date.now()) {
-    return NextResponse.json({ error: 'Link has expired — request a new one' }, { status: 401 })
+    return NextResponse.json({ error: 'Link has expired, request a new one' }, { status: 401 })
   }
 
   // One-time use: clear the token after successful verification

@@ -58,7 +58,7 @@ export default function ReadinessReview() {
         </div>
 
         <div className="px-4 py-3 border-b border-gray-100 bg-gray-50">
-          <p className="text-xs font-medium tracking-wide text-gray-400">DOCUMENTS COLLECTED — {docs.length} of {docs.length}</p>
+          <p className="text-xs font-medium tracking-wide text-gray-400">DOCUMENTS COLLECTED, {docs.length} of {docs.length}</p>
         </div>
         <div className="px-4">
           {docs.map(doc => (

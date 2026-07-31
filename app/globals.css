@@ -5,15 +5,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:wght@500;600&display=swap');
 
 :root {
-  --max-w: 420px;
-}
-
-/* Desktop: use the page, not a phone-width column */
-@media (min-width: 768px) {
-  :root { --max-w: 760px; }
-}
-@media (min-width: 1152px) {
-  :root { --max-w: 1080px; }
+  /* Full-page layout: the app spans the entire viewport */
+  --max-w: 100%;
 }
 
 * { box-sizing: border-box; }
@@ -31,12 +24,10 @@ h1, h2, h3 {
 }
 
 .app-shell {
-  max-width: var(--max-w);
-  margin: 0 auto;
+  width: 100%;
   min-height: 100dvh;
   background: white;
   position: relative;
-  box-shadow: 0 0 0 1px #E7E0D5; /* sand hairline */
 }
 
 /* sticky bottom nav safe area */

@@ -26,7 +26,7 @@ export async function POST(req) {
     const { error: sendError } = await resend.emails.send({
       from: FROM,
       to: email,
-      subject: 'Your Fair Fares application guide — Qualift',
+      subject: 'Your Fair Fares application guide, Qualift',
       html: `
 <!DOCTYPE html>
 <html>
@@ -40,7 +40,7 @@ export async function POST(req) {
     <div style="padding:28px">
       <p style="font-size:16px;font-weight:500;color:#1a1a2e;margin:0 0 12px">Hi ${name}, your guide is ready 🎉</p>
       <p style="font-size:14px;color:#64748b;line-height:1.6;margin:0 0 20px">
-        Your personalized Fair Fares application guide is attached as a PDF. Open it on your phone while you apply — it has your information pre-filled and walks you through every step from creating your HRA account to submitting your documents.
+        Your personalized Fair Fares application guide is attached as a PDF. Open it on your phone while you apply, it has your information pre-filled and walks you through every step from creating your HRA account to submitting your documents.
       </p>
       <div style="background:#f7f7f9;border-radius:10px;padding:14px 16px;margin-bottom:20px">
         <p style="font-size:12px;font-weight:600;color:#3730A3;margin:0 0 8px">📎 Attachment: Fair_Fares_Guide.pdf</p>
@@ -55,7 +55,7 @@ export async function POST(req) {
         Open HRA ACCESS to apply →
       </a>
       <p style="font-size:12px;color:#94a3b8;margin:0;line-height:1.5">
-        Questions? HRA Infoline: <strong>718-557-1399</strong> (Mon–Fri, 8am–5pm).<br/>
+        Questions? HRA Infoline: <strong>718-557-1399</strong> (Mon-Fri, 8am-5pm).<br/>
         Qualift is not affiliated with HRA or the MTA.
       </p>
     </div>
@@ -71,7 +71,7 @@ export async function POST(req) {
       ],
     })
 
-    // Resend does NOT throw on API errors — it returns { error }
+    // Resend does NOT throw on API errors, it returns { error }
     if (sendError) {
       return Response.json({ ok: false, error: sendError.message || 'Email delivery failed' }, { status: 500 })
     }

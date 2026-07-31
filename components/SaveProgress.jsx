@@ -4,8 +4,8 @@ import { useProgress } from '@/store/ProgressContext'
 
 /**
  * Appears right after the first positive eligibility signal (NYC resident = yes).
- * onSaved(email) — called after email is confirmed sent
- * onSkip()       — user continues without saving
+ * onSaved(email), called after email is confirmed sent
+ * onSkip()      , user continues without saving
  */
 export default function SaveProgress({ context, onSaved, onSkip }) {
   const { progress, setProgress } = useProgress()
@@ -28,7 +28,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
       setProgress(p => ({ ...p, email: email.toLowerCase().trim(), sessionId: data.sessionId }))
       onSaved(email)
     } catch (err) {
-      setError(err.message || 'Something went wrong — try again')
+      setError(err.message || 'Something went wrong, try again')
     } finally {
       setSending(false)
     }
@@ -36,7 +36,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
 
   return (
     <div className="fade-in px-6 py-8 flex flex-col gap-5">
-      {/* Context card — shows what they just confirmed */}
+      {/* Context card, shows what they just confirmed */}
       {context && (
         <div className="bg-purple-50 border border-purple-200 rounded-xl p-4">
           <p className="text-xs font-medium tracking-wide text-purple-600 mb-2">JUST CONFIRMED</p>
@@ -48,7 +48,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
         <h2 className="text-lg font-medium text-gray-900 mb-2">Save your progress</h2>
         <p className="text-sm text-gray-500 leading-relaxed">
           Getting your documents can take a few days. Enter your email and we'll send a link to pick up
-          right here — on any device, no password needed.
+          right here, on any device, no password needed.
         </p>
       </div>
 
@@ -82,7 +82,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
         onClick={onSkip}
         className="text-sm text-gray-400 underline text-center"
       >
-        Skip for now — continue without saving
+        Skip for now, continue without saving
       </button>
     </div>
   )

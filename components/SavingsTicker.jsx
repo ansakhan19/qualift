@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * TurboTax-style "refund ticker" — for Qualift it counts transit savings.
+ * TurboTax-style "refund ticker", for Qualift it counts transit savings.
  * 10 rides/week × $1.50 saved per ride × 52 weeks = $780/year.
  */
 export default function SavingsTicker({ label = 'Your estimated savings' }) {

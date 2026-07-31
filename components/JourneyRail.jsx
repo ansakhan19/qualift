@@ -1,7 +1,7 @@
 'use client'
 
 /**
- * TurboTax-style section rail — the five friendly stops of the journey.
+ * TurboTax-style section rail, the five friendly stops of the journey.
  * `active` = key of the current section; earlier sections render as complete.
  */
 const SECTIONS = [
