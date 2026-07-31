@@ -4,11 +4,11 @@ import {
 } from '@react-pdf/renderer'
 
 const C = {
-  purple: '#7F77DD',
-  purpleDark: '#3C3489',
-  purpleLight: '#EEEDFE',
-  teal: '#1D9E75',
-  tealLight: '#E1F5EE',
+  purple: '#4F46E5',
+  purpleDark: '#3730A3',
+  purpleLight: '#EEF2FF',
+  teal: '#618B68',
+  tealLight: '#EAF2EB',
   gray900: '#111827',
   gray600: '#4B5563',
   gray400: '#9CA3AF',
@@ -61,7 +61,7 @@ const s = StyleSheet.create({
 
   // Note box
   noteBox: { backgroundColor: C.tealLight, borderRadius: 6, padding: 12, marginTop: 8, marginBottom: 4 },
-  noteText: { fontSize: 10, color: '#0F6E56', lineHeight: 1.5 },
+  noteText: { fontSize: 10, color: '#4D6E53', lineHeight: 1.5 },
 
   // Warning box
   warnBox: { backgroundColor: '#FEF3C7', borderRadius: 6, padding: 10, marginTop: 6 },
@@ -164,7 +164,7 @@ export function buildApplicationGuide(progress) {
 
           {/* Part 1 — Create account */}
           <Text style={s.sectionTitle}>PART 1 — Create your HRA ACCESS account</Text>
-          <Step n={1} title="Open HRA ACCESS on your phone" desc="Go to a069-access.nyc.gov in your browser. Tap 'Apply Now' on the home screen. The site works on any mobile browser — Chrome or Safari recommended." link={{ label: 'Open HRA ACCESS', url: 'https://a069-access.nyc.gov/accesshra/' }} />
+          <Step n={1} title="Open HRA ACCESS on your phone" desc="Go to a069-access.nyc.gov in your browser. Tap 'Apply Now' on the home screen. The site works on any mobile browser — Chrome or Safari recommended." link={{ label: 'Open HRA ACCESS', url: 'https://a069-access.nyc.gov/accesshra/fairfares' }} />
           <Step n={2} title="Tap 'Create Account'" desc="On the login page, tap 'Create Account' at the bottom. Do not use a social login — create a new HRA account directly." />
           <Step n={3} title="Enter your basic info" desc={`Use the exact name on your government ID: ${name || '[your legal name]'}. For email, use the one you have access to on your phone.`} />
           <Step n={4} title="Verify your email" desc="HRA will send a verification code to your email. Open your email app, copy the code, and paste it back into HRA ACCESS. Check spam if it doesn't arrive within 2 minutes." />

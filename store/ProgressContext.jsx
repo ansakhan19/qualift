@@ -57,18 +57,26 @@ export function ProgressProvider({ children, initialProgress }) {
     return DEFAULT_PROGRESS
   })
 
-  // Persist to localStorage on every change
+  // Persist to localStorage on every change — WITHOUT application answers.
+  // Personal application data (name, DOB, SSN, address, income) lives in memory
+  // only and disappears when the tab closes. Students take it with them as a
+  // downloadable cheat-sheet PDF instead.
   useEffect(() => {
-    try { localStorage.setItem(LS_KEY, JSON.stringify(progress)) } catch {}
+    try {
+      const { application, ...rest } = progress
+      localStorage.setItem(LS_KEY, JSON.stringify(rest))
+    } catch {}
   }, [progress])
 
-  // Persist to backend (fire-and-forget) if we have a sessionId
+  // Persist to backend (fire-and-forget) if we have a sessionId — application
+  // answers are stripped here too; we never store them.
   const syncToBackend = useCallback((p) => {
     if (!p.sessionId) return
+    const { application, ...rest } = p
     fetch('/api/save-progress', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ sessionId: p.sessionId, progress: p }),
+      body: JSON.stringify({ sessionId: p.sessionId, progress: rest }),
     }).catch(() => {})
   }, [])
 

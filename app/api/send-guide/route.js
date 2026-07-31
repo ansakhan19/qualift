@@ -33,7 +33,7 @@ export async function POST(req) {
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head>
 <body style="margin:0;padding:0;background:#f8f8fc;font-family:Inter,system-ui,sans-serif">
   <div style="max-width:480px;margin:32px auto;background:white;border-radius:16px;border:1px solid #e5e7eb;overflow:hidden">
-    <div style="background:#7F77DD;padding:24px 28px">
+    <div style="background:#4F46E5;padding:24px 28px">
       <div style="font-size:22px;font-weight:600;color:white">Qualift</div>
       <div style="font-size:13px;color:rgba(255,255,255,0.8);margin-top:3px">Fair Fares application readiness</div>
     </div>
@@ -43,7 +43,7 @@ export async function POST(req) {
         Your personalized Fair Fares application guide is attached as a PDF. Open it on your phone while you apply — it has your information pre-filled and walks you through every step from creating your HRA account to submitting your documents.
       </p>
       <div style="background:#f7f7f9;border-radius:10px;padding:14px 16px;margin-bottom:20px">
-        <p style="font-size:12px;font-weight:600;color:#3C3489;margin:0 0 8px">📎 Attachment: Fair_Fares_Guide.pdf</p>
+        <p style="font-size:12px;font-weight:600;color:#3730A3;margin:0 0 8px">📎 Attachment: Fair_Fares_Guide.pdf</p>
         <ul style="font-size:12px;color:#64748b;margin:0;padding-left:16px;line-height:1.8">
           <li>Create your HRA ACCESS account</li>
           <li>Fill every form field (pre-filled with your info)</li>
@@ -51,7 +51,7 @@ export async function POST(req) {
           <li>Submit and track your application</li>
         </ul>
       </div>
-      <a href="https://a069-access.nyc.gov/accesshra/" style="display:block;background:#1D9E75;color:white;text-decoration:none;text-align:center;padding:14px 24px;border-radius:10px;font-size:15px;font-weight:500;margin-bottom:20px">
+      <a href="https://a069-access.nyc.gov/accesshra/fairfares" style="display:block;background:#618B68;color:white;text-decoration:none;text-align:center;padding:14px 24px;border-radius:10px;font-size:15px;font-weight:500;margin-bottom:20px">
         Open HRA ACCESS to apply →
       </a>
       <p style="font-size:12px;color:#94a3b8;margin:0;line-height:1.5">

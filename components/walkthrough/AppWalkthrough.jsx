@@ -399,9 +399,20 @@ export default function AppWalkthrough() {
     <div className="fade-in flex flex-col min-h-screen">
       {/* Stepper */}
       <div className="px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
-        <div className="flex items-center justify-between mb-2">
+        <div className="flex items-center justify-between gap-3 mb-2">
           <p className="text-sm font-medium text-gray-900">{section.title}</p>
-          <span className="text-xs font-medium text-purple-600">Step {step + 1} of {total}</span>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <a
+              href="https://a069-access.nyc.gov/accesshra/fairfares"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1.5 bg-teal-400 hover:bg-teal-600 text-white text-xs font-medium rounded-lg px-3 py-2 transition-colors"
+            >
+              <i className="ti ti-external-link" />
+              Open ACCESS HRA to follow along
+            </a>
+            <span className="text-xs font-medium text-purple-600">Step {step + 1} of {total}</span>
+          </div>
         </div>
         <div className="flex gap-1.5">
           {sections.map((s, i) => (
@@ -410,6 +421,18 @@ export default function AppWalkthrough() {
           ))}
         </div>
       </div>
+
+      {/* Privacy: nothing here is stored */}
+      {step === 0 && (
+        <div className="mx-5 mt-4 flex items-start gap-2.5 bg-purple-50 rounded-xl px-4 py-3">
+          <i className="ti ti-lock text-purple-600 text-base flex-shrink-0 mt-0.5" />
+          <p className="text-xs text-purple-800 leading-relaxed">
+            <strong>Your answers stay on this device.</strong> We never store your personal application
+            info — it disappears when you close this tab. Can't finish on the spot? Download your
+            cheat sheet PDF at the end and complete the application later.
+          </p>
+        </div>
+      )}
 
       {/* Two panels: the real screen | your cheat sheet */}
       <div className="flex-1 px-5 py-5 grid grid-cols-1 lg:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] gap-6 items-start">

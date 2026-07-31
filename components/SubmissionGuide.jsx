@@ -190,7 +190,7 @@ export default function SubmissionGuide() {
 
         {/* HRA link */}
         <a
-          href="https://a069-access.nyc.gov/accesshra/"
+          href="https://a069-access.nyc.gov/accesshra/fairfares"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center justify-center gap-2 w-full bg-teal-600 hover:bg-teal-800 text-white rounded-xl py-3.5 text-sm font-medium transition-colors"

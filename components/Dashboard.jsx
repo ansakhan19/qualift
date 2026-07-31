@@ -1,16 +1,17 @@
 'use client'
 import { useRouter } from 'next/navigation'
 import { useProgress } from '@/store/ProgressContext'
+import SavingsTicker from '@/components/SavingsTicker'
 
 const STAGES = [
-  { n: 1, icon: 'ti-user',             label: 'Your profile',           sub: p => p.studentType === 'international' ? 'International student · F-1 visa' : 'NYC resident' },
-  { n: 2, icon: 'ti-shield-check',     label: 'Eligibility check',      sub: p => p.eligibility?.status === 'eligible' ? 'Income within 200% FPL · Qualified' : 'Pending' },
-  { n: 3, icon: 'ti-list-check',       label: 'Your document list',     sub: p => `${docTotal(p)} documents required for your profile` },
-  { n: 4, icon: 'ti-file-description', label: 'Document collection',    sub: p => `${docDone(p)} of ${docTotal(p)} documents ready` },
-  { n: 5, icon: 'ti-checklist',        label: 'All docs verified',      sub: () => 'Proceed when all documents are ready' },
-  { n: 6, icon: 'ti-clipboard-check',  label: 'Readiness review',       sub: () => 'Final eligibility confirmation' },
-  { n: 7, icon: 'ti-pencil',           label: 'Fill your application',  sub: () => 'Field-by-field walkthrough of HRA form' },
-  { n: 8, icon: 'ti-send',             label: 'Submit to HRA',          sub: () => 'Your guide + direct link to HRA ACCESS' },
+  { n: 1, icon: 'ti-user',             label: 'About you',              sub: p => p.studentType === 'international' ? 'International student' : 'NYC resident' },
+  { n: 2, icon: 'ti-shield-check',     label: 'Do I qualify?',          sub: p => p.eligibility?.status === 'eligible' ? 'Yes — income within the limit' : 'Pending' },
+  { n: 3, icon: 'ti-list-check',       label: 'Your document list',     sub: p => `${docTotal(p)} documents needed for your profile` },
+  { n: 4, icon: 'ti-file-description', label: 'My documents',           sub: p => `${docDone(p)} of ${docTotal(p)} collected` },
+  { n: 5, icon: 'ti-checklist',        label: 'All docs ready',         sub: () => 'Continue when everything is collected' },
+  { n: 6, icon: 'ti-clipboard-check',  label: 'Readiness review',       sub: () => 'Final check before you apply' },
+  { n: 7, icon: 'ti-pencil',           label: 'Apply on ACCESS HRA',    sub: () => 'Copy-paste cheat sheet, step by step' },
+  { n: 8, icon: 'ti-send',             label: 'Ride for less',          sub: () => 'Your PDF guide + OMNY card by mail' },
 ]
 
 const STAGE_ROUTES = {
@@ -56,6 +57,8 @@ export default function Dashboard() {
 
   const activeStage = STAGES.find(s => s.n === current) || STAGES[0]
 
+  const isEligible = progress.eligibility?.status === 'eligible'
+
   return (
     <div className="pb-nav">
       {/* Header */}
@@ -65,9 +68,7 @@ export default function Dashboard() {
           <h1 className="text-xl font-medium text-gray-900 mt-0.5">Pick up where you left off</h1>
         </div>
         <div className="flex items-center gap-2">
-          <div className="bg-purple-50 border border-purple-200 rounded-full px-3 py-1 text-xs text-purple-600 font-medium">
-            {pct}% ready
-          </div>
+          <SavingsTicker />
           <button
             onClick={() => { reset(); window.location.href = '/' }}
             className="text-xs text-gray-400 hover:text-coral-600 border border-gray-200 hover:border-coral-200 rounded-lg px-2.5 py-1.5 transition-colors flex items-center gap-1"
@@ -78,6 +79,23 @@ export default function Dashboard() {
           </button>
         </div>
       </div>
+
+      {/* Celebration — you're in */}
+      {isEligible && (
+        <div className="mx-5 mt-4 bg-teal-50 rounded-xl p-4 flex items-center gap-3.5">
+          <div className="w-11 h-11 rounded-full bg-teal-400 flex items-center justify-center flex-shrink-0">
+            <i className="ti ti-confetti text-white text-xl" />
+          </div>
+          <div className="flex-1">
+            <p className="text-sm font-medium text-teal-800">You qualify — nice!</p>
+            <p className="text-xs text-teal-600 mt-0.5">
+              {done < total
+                ? `${done} of ${total} documents ready. Collect the rest and you can apply today.`
+                : 'Everything is ready — you can apply right now.'}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Progress card */}
       <div className="mx-5 mt-4 bg-gray-50 border border-gray-200 rounded-xl p-4">

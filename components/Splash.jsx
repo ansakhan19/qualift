@@ -34,38 +34,45 @@ export default function Splash({ onStart, onReturnEmail }) {
           <i className="ti ti-bolt text-white text-3xl" />
         </div>
 
+        <p className="text-sm font-medium text-purple-600 mb-2">Hi there 👋</p>
         <h1 className="text-2xl font-medium text-gray-900 leading-tight mb-3">
-          Get 50% off every subway and bus ride
+          Let's get you 50% off every subway and bus ride
         </h1>
         <p className="text-sm text-gray-500 leading-relaxed max-w-xs mb-4">
-          Qualift walks you through the Fair Fares application — from eligibility to submission — at your own pace.
+          Answer a few questions — about 10 minutes. We'll tell you if you qualify and walk you through the whole application.
         </p>
 
-        {/* Fare comparison — the value, up front */}
-        <div className="flex gap-3 w-full mb-4">
-          <div className="flex-1 bg-purple-50 border border-purple-200 rounded-xl p-3 text-center">
-            <p className="text-lg font-medium text-purple-800">$1.50</p>
-            <p className="text-xs text-purple-600">per ride with Fair Fares</p>
-            <p className="text-xs text-gray-400 line-through">$3.00 regular</p>
-          </div>
-          <div className="flex-1 bg-purple-50 border border-purple-200 rounded-xl p-3 text-center">
-            <p className="text-lg font-medium text-purple-800">$17.50</p>
-            <p className="text-xs text-purple-600">weekly fare cap</p>
-            <p className="text-xs text-gray-400 line-through">$35 regular</p>
-          </div>
+        {/* Savings — the TurboTax hook */}
+        <div className="inline-flex items-center gap-2.5 bg-teal-50 rounded-full px-5 py-2.5 mb-5">
+          <i className="ti ti-coin text-teal-600 text-lg" />
+          <span className="text-sm text-teal-800">
+            Most students save about <strong className="text-base">$780/year</strong>
+          </span>
         </div>
 
-        <div className="inline-flex items-center gap-2 bg-teal-50 border border-teal-400 rounded-full px-3 py-1.5 text-xs text-teal-800 mb-6">
-          <i className="ti ti-shield-check" />
-          Free · No account required · Takes ~10 min
+        {/* Fare comparison */}
+        <div className="flex gap-3 w-full mb-5">
+          <div className="flex-1 bg-purple-50 rounded-xl p-3 text-center">
+            <p className="text-lg font-medium text-purple-800">$1.50</p>
+            <p className="text-xs text-purple-600">per ride, was $3.00</p>
+          </div>
+          <div className="flex-1 bg-purple-50 rounded-xl p-3 text-center">
+            <p className="text-lg font-medium text-purple-800">$17.50</p>
+            <p className="text-xs text-purple-600">weekly cap, was $35</p>
+          </div>
+          <div className="flex-1 bg-purple-50 rounded-xl p-3 text-center">
+            <p className="text-lg font-medium text-purple-800">Any visa</p>
+            <p className="text-xs text-purple-600">no public charge</p>
+          </div>
         </div>
 
         <button
           onClick={onStart}
-          className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-4 text-sm font-medium transition-colors mb-3"
+          className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-4 text-sm font-medium transition-colors mb-2"
         >
-          Check if I qualify →
+          See if I qualify
         </button>
+        <p className="text-xs text-gray-400 mb-3">Free · no account needed · nothing is stored</p>
 
         {/* Divider */}
         <div className="flex items-center gap-3 w-full my-2">

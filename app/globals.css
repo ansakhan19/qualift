@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Bricolage+Grotesque:wght@500;600&display=swap');
 
 :root {
   --max-w: 420px;
@@ -20,9 +20,14 @@
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: #f8f8fc;
-  color: #1a1a2e;
+  background: #FAF6EF; /* warm white — never sterile */
+  color: #1E1B2E;      /* ink */
   -webkit-font-smoothing: antialiased;
+}
+
+/* Headings get the brand display face */
+h1, h2, h3 {
+  font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
 }
 
 .app-shell {
@@ -31,7 +36,7 @@ body {
   min-height: 100dvh;
   background: white;
   position: relative;
-  box-shadow: 0 0 0 1px #e5e7eb;
+  box-shadow: 0 0 0 1px #E7E0D5; /* sand hairline */
 }
 
 /* sticky bottom nav safe area */
@@ -50,7 +55,7 @@ body {
 }
 
 /* range slider accent */
-input[type='range'] { accent-color: #7F77DD; }
+input[type='range'] { accent-color: #4F46E5; }
 
 /* select arrow */
 select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 36px !important; }
