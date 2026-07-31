@@ -76,7 +76,7 @@ export default function ReadinessReview() {
 
         <div className="px-4 py-3 bg-gray-50">
           <p className="text-xs text-gray-500 leading-relaxed">
-            <strong>What happens next:</strong> We'll walk you through every field of the HRA Fair Fares application with your answers pre-loaded where possible. Takes about 5 minutes.
+            <strong>What happens next:</strong> We'll walk you through every field of the HRA Fair Fares application, step by step. Nothing is stored, and you can download a cheat sheet PDF at the end. Takes about 5 minutes.
           </p>
         </div>
       </div>

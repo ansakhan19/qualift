@@ -173,9 +173,18 @@ export default function AppWalkthrough() {
       ),
       guide: (
         <>
+          <a
+            href="https://a069-access.nyc.gov/accesshra/fairfares"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors"
+          >
+            <i className="ti ti-external-link" />
+            Open the ACCESS HRA Fair Fares portal
+          </a>
           <InfoCard title="Steps on the real site">
             <ol className="text-sm text-gray-500 leading-relaxed list-decimal ml-4 flex flex-col gap-1.5">
-              <li>Go to <strong className="text-gray-800">nyc.gov/accessfairfares</strong></li>
+              <li>Open the portal with the button above, it opens in a new tab so you can follow along</li>
               <li>Click <strong className="text-gray-800">"Create Account"</strong></li>
               <li>Asked to connect an HRA case? Never received benefits → click <strong className="text-gray-800">"Skip"</strong></li>
               <li>On the Fair Fares homepage, click <strong className="text-gray-800">"Apply Now"</strong></li>
@@ -401,18 +410,7 @@ export default function AppWalkthrough() {
       <div className="px-5 py-4 border-b border-gray-100 bg-white sticky top-0 z-10">
         <div className="flex items-center justify-between gap-3 mb-2">
           <p className="text-sm font-medium text-gray-900">{section.title}</p>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <a
-              href="https://a069-access.nyc.gov/accesshra/fairfares"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 bg-teal-400 hover:bg-teal-600 text-white text-xs font-medium rounded-lg px-3 py-2 transition-colors"
-            >
-              <i className="ti ti-external-link" />
-              Open ACCESS HRA to follow along
-            </a>
-            <span className="text-xs font-medium text-purple-600">Step {step + 1} of {total}</span>
-          </div>
+          <span className="text-xs font-medium text-purple-600 flex-shrink-0">Step {step + 1} of {total}</span>
         </div>
         <div className="flex gap-1.5">
           {sections.map((s, i) => (
