@@ -87,8 +87,8 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
           <div className="bg-purple-400 h-1 rounded-full bar-fill" style={{ width: `${(step / total) * 100}%` }} />
         </div>
         <p className="text-xs text-gray-400 mt-1 mb-6">Question {step} of {total}</p>
-        <h2 className="text-lg font-medium text-gray-900 leading-snug mb-2">{question}</h2>
-        {sub && <p className="text-sm text-gray-500 leading-relaxed mb-3">{sub}</p>}
+        <h2 className="text-2xl lg:text-3xl font-medium text-gray-900 leading-snug mb-3">{question}</h2>
+        {sub && <p className="text-base text-gray-500 leading-relaxed mb-4">{sub}</p>}
         {note && (
           <div className="bg-purple-50 border border-purple-100 rounded-xl px-4 py-3 mb-5">
             <p className="text-xs text-purple-700 leading-relaxed">{note}</p>
@@ -109,8 +109,8 @@ function Question({ step, total, question, sub, note, options, onAnswer, onBack,
           >
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="text-sm font-medium text-gray-900">{opt.label}</p>
-                {opt.sub && <p className="text-xs text-gray-500 mt-1">{opt.sub}</p>}
+                <p className="text-base font-medium text-gray-900">{opt.label}</p>
+                {opt.sub && <p className="text-sm text-gray-500 mt-1">{opt.sub}</p>}
               </div>
               {selectedValue === opt.value && (
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-400 flex items-center justify-center mt-0.5">
@@ -443,8 +443,12 @@ export default function EligibilityFlow({ onComplete }) {
 
   if (screen === 'studentType') return (
     <div className="fade-in px-5 pt-6">
-      <h2 className="text-xl font-medium text-gray-900 mb-2">Are you an international student?</h2>
-      <p className="text-sm text-gray-500 leading-relaxed mb-6">
+      <button onClick={() => router.push('/')} className="flex items-center gap-1.5 text-sm text-purple-600 font-medium mb-4 hover:text-purple-800 transition-colors">
+        <i className="ti ti-arrow-left text-base" />
+        Back to start
+      </button>
+      <h2 className="text-2xl lg:text-3xl font-medium text-gray-900 mb-3">Are you an international student?</h2>
+      <p className="text-base text-gray-500 leading-relaxed mb-6">
         This determines which documents you'll need and which transit benefits you're eligible for.
       </p>
       <div className="flex flex-col gap-3">
@@ -460,8 +464,8 @@ export default function EligibilityFlow({ onComplete }) {
             }`}>
             <div className="flex items-start justify-between gap-2">
               <div>
-                <p className="text-sm font-medium text-gray-900">{o.label}</p>
-                <p className="text-xs text-gray-500 mt-1">{o.sub}</p>
+                <p className="text-base font-medium text-gray-900">{o.label}</p>
+                <p className="text-sm text-gray-500 mt-1">{o.sub}</p>
               </div>
               {progress.studentType === o.val && (
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-purple-400 flex items-center justify-center mt-0.5">
