@@ -63,7 +63,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
             className="border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-400 bg-white"
           />
           <p className="text-xs text-gray-400 leading-relaxed">
-            We'll only use this to send your progress link. No spam, ever.
+            We'll send your progress link and may follow up once to see if you got your discount. No spam.
           </p>
         </div>
 

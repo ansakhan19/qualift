@@ -100,7 +100,7 @@ export default function Splash({ onStart, onReturnEmail }) {
 
       <p className="text-center text-xs text-gray-400 px-6 pb-6 leading-relaxed">
         Qualift is free and not affiliated with HRA or the MTA.
-        Your email is only used to restore your progress.
+        We only use your email for your progress link and one follow-up. No spam.
       </p>
     </div>
   )
