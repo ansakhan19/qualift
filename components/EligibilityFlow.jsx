@@ -329,30 +329,18 @@ function EligibleScreen({ progress, onContinue, onStartFresh }) {
 function CheckEmail({ email, onContinue }) {
   return (
     <div className="fade-in px-5 pt-10 text-center">
-      <div className="w-16 h-16 rounded-full bg-purple-50 border border-purple-200 flex items-center justify-center text-purple-600 text-2xl mx-auto mb-4">
-        <i className="ti ti-mail" />
+      <div className="w-16 h-16 rounded-full bg-teal-50 border border-teal-100 flex items-center justify-center text-teal-600 text-2xl mx-auto mb-4">
+        <i className="ti ti-check" />
       </div>
-      <h2 className="text-xl font-medium text-gray-900 mb-2">Check your email</h2>
-      <p className="text-sm text-gray-500 mb-2">We sent a link to</p>
+      <h2 className="text-xl font-medium text-gray-900 mb-2">You're all set</h2>
+      <p className="text-sm text-gray-500 mb-2">We'll keep you updated on your application at</p>
       <p className="text-sm font-medium text-purple-700 bg-purple-50 rounded-lg px-4 py-2 inline-block mb-6">{email}</p>
-      <div className="flex flex-col gap-3 text-left mb-6">
-        {[
-          ['Open the email from Qualift', "Check your spam folder if you don't see it within 2 minutes."],
-          ['Tap "Continue my application"', 'Works on any device, any browser.'],
-          ["You'll land right back here", 'Progress is fully restored.'],
-        ].map(([title, sub], i) => (
-          <div key={i} className="flex gap-3 items-start bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
-            <div className="w-6 h-6 rounded-full bg-purple-400 text-white text-xs font-medium flex items-center justify-center flex-shrink-0 mt-0.5">{i + 1}</div>
-            <div>
-              <p className="text-sm font-medium text-gray-900">{title}</p>
-              <p className="text-xs text-gray-500 mt-0.5">{sub}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-      <p className="text-xs text-gray-400 mb-4">Link expires in 7 days. You can always request a new one from the home screen.</p>
+      <p className="text-sm text-gray-500 leading-relaxed mb-8 max-w-sm mx-auto">
+        We may follow up once to see how your application is going. No spam. Download your cheat sheet PDF
+        at the end so you have everything handy even if you step away.
+      </p>
       <button onClick={onContinue} className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors">
-        Continue anyway →
+        Continue →
       </button>
     </div>
   )
