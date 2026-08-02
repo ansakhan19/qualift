@@ -3,7 +3,7 @@
  *
  * Handles two actions, sent as JSON POST bodies:
  *  - { email, studentType, eligibility, stage }            -> logs a row to the Emails sheet
- *  - { action: 'sendGuide', email, name, pdfBase64 }        -> emails the PDF guide from your Gmail
+ *  - { action: 'sendGuide', email, name, pdfBase64 }        -> emails the PDF guide from your Google account
  *
  * Setup:
  * 1. Open your Google Sheet -> Extensions -> Apps Script
@@ -63,29 +63,31 @@ function sendGuideEmail(data) {
       'Fair_Fares_Guide.pdf'
     )
 
-    GmailApp.sendEmail(
-      data.email,
-      'Your Fair Fares application guide, Qualift',
-      'Hi ' + name + ',\n\nYour personalized Fair Fares application guide is attached as a PDF. ' +
-      'It has your information laid out in the order it appears on the HRA ACCESS form.\n\n' +
-      'Apply at: https://a069-access.nyc.gov/accesshra/fairfares\n\n' +
-      'Qualift is not affiliated with HRA or the MTA.',
-      {
-        htmlBody:
-          '<div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto">' +
-          '<p style="font-size:16px;font-weight:600;color:#1a1a2e">Hi ' + name + ', your guide is ready</p>' +
-          '<p style="font-size:14px;color:#5c5548;line-height:1.6">' +
-          'Your personalized Fair Fares application guide is attached as a PDF. It has your information ' +
-          'laid out in the order it appears on the HRA ACCESS form.</p>' +
-          '<p><a href="https://a069-access.nyc.gov/accesshra/fairfares" ' +
-          'style="display:inline-block;background:#4F46E5;color:white;text-decoration:none;' +
-          'padding:12px 20px;border-radius:8px;font-size:14px;font-weight:500">Open HRA ACCESS to apply</a></p>' +
-          '<p style="font-size:12px;color:#a69d8d">Qualift is not affiliated with HRA or the MTA.</p>' +
-          '</div>',
-        attachments: [pdfBlob],
-        name: 'Qualift',
-      }
-    )
+    // MailApp needs a much lighter permission than GmailApp (just "send email
+    // as you", not "read/manage your whole mailbox"), so it's less likely to
+    // get stuck without a consent prompt.
+    MailApp.sendEmail({
+      to: data.email,
+      subject: 'Your Fair Fares application guide, Qualift',
+      body:
+        'Hi ' + name + ',\n\nYour personalized Fair Fares application guide is attached as a PDF. ' +
+        'It has your information laid out in the order it appears on the HRA ACCESS form.\n\n' +
+        'Apply at: https://a069-access.nyc.gov/accesshra/fairfares\n\n' +
+        'Qualift is not affiliated with HRA or the MTA.',
+      htmlBody:
+        '<div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto">' +
+        '<p style="font-size:16px;font-weight:600;color:#1a1a2e">Hi ' + name + ', your guide is ready</p>' +
+        '<p style="font-size:14px;color:#5c5548;line-height:1.6">' +
+        'Your personalized Fair Fares application guide is attached as a PDF. It has your information ' +
+        'laid out in the order it appears on the HRA ACCESS form.</p>' +
+        '<p><a href="https://a069-access.nyc.gov/accesshra/fairfares" ' +
+        'style="display:inline-block;background:#4F46E5;color:white;text-decoration:none;' +
+        'padding:12px 20px;border-radius:8px;font-size:14px;font-weight:500">Open HRA ACCESS to apply</a></p>' +
+        '<p style="font-size:12px;color:#a69d8d">Qualift is not affiliated with HRA or the MTA.</p>' +
+        '</div>',
+      attachments: [pdfBlob],
+      name: 'Qualift',
+    })
 
     return ContentService
       .createTextOutput(JSON.stringify({ ok: true }))
