@@ -40,6 +40,27 @@ export default function SubmissionGuide() {
   const isIntl = studentType === 'international'
   const [dlState, setDlState]     = useState('idle') // 'idle'|'downloading'|'error'
   const [dlError, setDlError]     = useState('')
+  const [sendState, setSendState] = useState('idle') // 'idle'|'sending'|'sent'|'error'
+  const [sendError, setSendError] = useState('')
+
+  const savedEmail = progress.email || a?.email
+
+  async function handleSendGuide() {
+    if (!savedEmail) return
+    setSendState('sending'); setSendError('')
+    try {
+      const res = await fetch('/api/send-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: savedEmail, progress }),
+      })
+      const data = await res.json()
+      if (data.ok) { setSendState('sent') }
+      else { setSendState('error'); setSendError(data.error || 'Email failed, you can still download the PDF above') }
+    } catch {
+      setSendState('error'); setSendError('Network error, you can still download the PDF above')
+    }
+  }
 
   async function handleDownloadPdf() {
     setDlState('downloading'); setDlError('')
@@ -142,6 +163,31 @@ export default function SubmissionGuide() {
           {dlState === 'downloading' ? 'Generating PDF…' : dlState === 'error' ? 'Failed, tap to retry' : 'Download my guide as a PDF'}
         </button>
         {dlError && <p className="text-xs text-coral-600 text-center -mt-2">{dlError}</p>}
+
+        {/* Email guide button, sends to the email already captured earlier in the flow */}
+        {savedEmail && (
+          <button
+            onClick={handleSendGuide}
+            disabled={sendState === 'sending' || sendState === 'sent'}
+            className={`flex items-center justify-center gap-2 w-full rounded-xl py-3.5 text-sm font-medium transition-colors ${
+              sendState === 'sent'
+                ? 'bg-teal-50 text-teal-700 border border-teal-200 cursor-default'
+                : sendState === 'error'
+                ? 'bg-coral-50 text-coral-700 border border-coral-200'
+                : 'bg-white text-purple-600 border border-purple-200 hover:bg-purple-50'
+            }`}
+          >
+            <i className={`ti ${sendState === 'sent' ? 'ti-check' : sendState === 'sending' ? 'ti-loader animate-spin' : 'ti-mail'}`} />
+            {sendState === 'sent'
+              ? `Guide sent to ${savedEmail}`
+              : sendState === 'sending'
+              ? 'Sending…'
+              : sendState === 'error'
+              ? 'Failed, tap to retry'
+              : `Email this guide to ${savedEmail}`}
+          </button>
+        )}
+        {sendError && <p className="text-xs text-coral-600 text-center -mt-2">{sendError}</p>}
 
         {/* HRA link */}
         <a
