@@ -26,9 +26,6 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
       const data = await r.json()
       if (!r.ok) throw new Error(data.error)
       setProgress(p => ({ ...p, email: email.toLowerCase().trim(), sessionId: data.sessionId }))
-      if (data.emailSent === false) {
-        setError("Saved. We couldn't send the email itself, but your progress link still works next time you sign in.")
-      }
       onSaved(email)
     } catch (err) {
       setError(err.message || 'Something went wrong, try again')
@@ -48,10 +45,10 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
       )}
 
       <div>
-        <h2 className="text-lg font-medium text-gray-900 mb-2">Save your progress</h2>
+        <h2 className="text-lg font-medium text-gray-900 mb-2">Leave your email</h2>
         <p className="text-sm text-gray-500 leading-relaxed">
-          Getting your documents can take a few days. Enter your email and we'll send a link to pick up
-          right here, on any device, no password needed.
+          Getting your documents can take a few days. Leave your email so we can follow up and check in
+          on how your application is going. Download your cheat sheet PDF at the end to keep your info handy.
         </p>
       </div>
 
@@ -66,7 +63,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
             className="border border-gray-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-purple-400 bg-white"
           />
           <p className="text-xs text-gray-400 leading-relaxed">
-            We'll send your progress link and may follow up once to see if you got your discount. No spam.
+            We'll only use this to check in once about your application. No spam.
           </p>
         </div>
 
@@ -77,7 +74,7 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
           disabled={sending}
           className="w-full bg-purple-400 hover:bg-purple-600 text-white rounded-xl py-3.5 text-sm font-medium transition-colors disabled:opacity-50"
         >
-          {sending ? 'Sending…' : 'Send my progress link'}
+          {sending ? 'Saving…' : 'Save my email'}
         </button>
       </form>
 
