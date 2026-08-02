@@ -120,7 +120,7 @@ export default function SubmissionGuide() {
         <Section title="PERSONAL INFORMATION" rows={[
           ['Legal first name', a?.firstName],
           ['Legal last name', a?.lastName],
-          ['Date of birth', a?.dob],
+          ['Date of birth', 'Type it directly into the HRA form'],
           ['SSN / ITIN', a?.ssn || (isIntl ? 'Leave blank (F-1 visa)' : '- required'), "Shown on this screen only, never in your PDF or email"],
           ['Phone', a?.phone],
           ['Email', a?.email],

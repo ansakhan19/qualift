@@ -183,7 +183,7 @@ export function buildApplicationGuide(progress) {
           <Text style={{ fontSize: 10, fontFamily: 'Helvetica-Bold', color: C.gray400, textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 4 }}>Personal information</Text>
           <FieldRow label="Legal first name" value={a.firstName} note="As on your ID" />
           <FieldRow label="Legal last name" value={a.lastName} note="As on your ID" />
-          <FieldRow label="Date of birth" value={a.dob} note="MM/DD/YYYY" />
+          <FieldRow label="Date of birth" value="Type it directly into the HRA form" note="MM/DD/YYYY" />
           <FieldRow
             label="SSN / ITIN"
             value={isIntl ? 'Leave blank (F-1 visa)' : 'Type it directly into the HRA form'}

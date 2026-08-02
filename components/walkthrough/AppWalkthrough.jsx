@@ -62,6 +62,21 @@ function AnswerRow({ label, value, onChange, placeholder, tip, refNote, type = '
   )
 }
 
+// Fields we deliberately never collect, students type these straight into
+// the real HRA form. No input, no clipboard, nothing to transmit or store.
+function DirectEntryRow({ label, note }) {
+  return (
+    <div className="border border-gray-200 rounded-xl p-3.5 bg-gray-50">
+      <p className="text-xs font-medium text-gray-700 tracking-wide mb-1.5">{label}</p>
+      <p className="text-sm text-gray-500 leading-relaxed flex items-start gap-1.5">
+        <i className="ti ti-edit text-purple-400 flex-shrink-0 mt-0.5" />
+        Input directly on the HRA application, not collected here
+      </p>
+      {note && <p className="text-xs text-purple-700 mt-2 leading-relaxed bg-purple-50 rounded-lg px-2.5 py-1.5">{note}</p>}
+    </div>
+  )
+}
+
 function ChoiceRow({ label, value, onChange, options, tip }) {
   return (
     <div className="border border-gray-200 rounded-xl p-3.5 bg-white">
@@ -212,11 +227,8 @@ export default function AppWalkthrough() {
             placeholder="e.g. Maria" tip="Must match your passport, state ID, or IDNYC exactly." />
           <AnswerRow label="LEGAL LAST NAME" value={app.lastName} onChange={v => u({ lastName: v })}
             placeholder="e.g. Santos" />
-          <AnswerRow label="DATE OF BIRTH" value={app.dob} onChange={v => u({ dob: v })}
-            placeholder="MM/DD/YYYY" tip="You must be 18 through 64 to qualify." />
-          <AnswerRow label="SSN OR ITIN (OPTIONAL)" value={app.ssn} onChange={v => u({ ssn: v })}
-            placeholder="XXX-XX-XXXX or leave blank"
-            tip="Fair Fares does not trigger public charge and is open regardless of immigration status." />
+          <DirectEntryRow label="DATE OF BIRTH" note="You must be 18 through 64 to qualify." />
+          <DirectEntryRow label="SSN OR ITIN (OPTIONAL)" note="Fair Fares does not trigger public charge and is open regardless of immigration status." />
         </>
       ),
     },
