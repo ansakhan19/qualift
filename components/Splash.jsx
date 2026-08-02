@@ -17,8 +17,12 @@ export default function Splash({ onStart, onReturnEmail }) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: returnEmail }),
       })
+      const data = await r.json()
       if (!r.ok) throw new Error()
       setSent(true)
+      if (data.emailSent === false) {
+        setError("Saved, but we couldn't email the link right now. Try again later or just start below.")
+      }
     } catch {
       setError('Something went wrong, try again')
     } finally {

@@ -26,6 +26,9 @@ export default function SaveProgress({ context, onSaved, onSkip }) {
       const data = await r.json()
       if (!r.ok) throw new Error(data.error)
       setProgress(p => ({ ...p, email: email.toLowerCase().trim(), sessionId: data.sessionId }))
+      if (data.emailSent === false) {
+        setError("Saved. We couldn't send the email itself, but your progress link still works next time you sign in.")
+      }
       onSaved(email)
     } catch (err) {
       setError(err.message || 'Something went wrong, try again')
