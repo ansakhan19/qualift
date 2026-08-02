@@ -28,6 +28,11 @@ module.exports = {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['"Bricolage Grotesque"', 'Inter', 'system-ui', 'sans-serif'],
       },
+      // Lift the smallest sizes so fine print stays readable
+      fontSize: {
+        xs: ['0.8125rem', { lineHeight: '1.35' }],
+        sm: ['0.9375rem', { lineHeight: '1.45' }],
+      },
       borderRadius: { DEFAULT: '8px', lg: '12px', xl: '16px' },
     },
   },

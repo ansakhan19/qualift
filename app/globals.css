@@ -9,6 +9,13 @@
   --max-w: 100%;
 }
 
+/* Global type scale: everything in the app sizes off the root font.
+   Bumping it makes every screen bigger proportionally. */
+html { font-size: 17px; }
+@media (min-width: 1024px) {
+  html { font-size: 19px; }
+}
+
 * { box-sizing: border-box; }
 
 body {
