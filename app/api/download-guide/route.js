@@ -2,8 +2,10 @@ import { renderToBuffer } from '@react-pdf/renderer'
 import { buildApplicationGuide } from '@/lib/pdf/ApplicationGuide'
 
 /**
- * Generates the personalized Fair Fares guide PDF and returns it directly -
- * no email required. The browser downloads it as a file.
+ * NOT currently called by the app. The Download PDF button now generates
+ * the PDF entirely in the browser (see components/SubmissionGuide.jsx) so
+ * that application data never has to leave the student's device for a plain
+ * download. Left here in case a server-rendered fallback is ever needed.
  */
 export async function POST(req) {
   try {

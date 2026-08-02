@@ -1,6 +1,8 @@
 'use client'
 import { useState } from 'react'
+import { pdf } from '@react-pdf/renderer'
 import { useProgress } from '@/store/ProgressContext'
+import { buildApplicationGuide } from '@/lib/pdf/ApplicationGuide'
 
 const INCOME_LABELS = {
   finaid: 'Financial aid / student stipend',
@@ -62,19 +64,14 @@ export default function SubmissionGuide() {
     }
   }
 
+  // Generated entirely in the browser, no application data (name, DOB, address,
+  // income) is ever sent to the server for a plain download. The SSN is never
+  // printed in the PDF at all, see lib/pdf/ApplicationGuide.jsx.
   async function handleDownloadPdf() {
     setDlState('downloading'); setDlError('')
     try {
-      const res = await fetch('/api/download-guide', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ progress }),
-      })
-      if (!res.ok) {
-        const data = await res.json().catch(() => ({}))
-        throw new Error(data.error || 'PDF generation failed')
-      }
-      const blob = await res.blob()
+      const doc = buildApplicationGuide(progress)
+      const blob = await pdf(doc).toBlob()
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
@@ -124,7 +121,7 @@ export default function SubmissionGuide() {
           ['Legal first name', a?.firstName],
           ['Legal last name', a?.lastName],
           ['Date of birth', a?.dob],
-          ['SSN / ITIN', a?.ssn || (isIntl ? 'Leave blank (F-1 visa)' : '- required')],
+          ['SSN / ITIN', a?.ssn || (isIntl ? 'Leave blank (F-1 visa)' : '- required'), "Shown on this screen only, never in your PDF or email"],
           ['Phone', a?.phone],
           ['Email', a?.email],
         ]} />

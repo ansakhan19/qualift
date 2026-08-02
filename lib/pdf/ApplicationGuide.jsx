@@ -184,7 +184,11 @@ export function buildApplicationGuide(progress) {
           <FieldRow label="Legal first name" value={a.firstName} note="As on your ID" />
           <FieldRow label="Legal last name" value={a.lastName} note="As on your ID" />
           <FieldRow label="Date of birth" value={a.dob} note="MM/DD/YYYY" />
-          <FieldRow label="SSN / ITIN" value={a.ssn || (isIntl ? 'Leave blank (F-1)' : '- required')} />
+          <FieldRow
+            label="SSN / ITIN"
+            value={isIntl ? 'Leave blank (F-1 visa)' : 'Type it directly into the HRA form'}
+            note={isIntl ? undefined : 'Not included in this guide'}
+          />
           <FieldRow label="Phone number" value={a.phone} />
           <FieldRow label="Email" value={a.email || email} />
 

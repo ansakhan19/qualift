@@ -110,9 +110,10 @@ function sendGuideEmail(data) {
  */
 function testSendGuide() {
   var fakePdf = Utilities.newBlob('test', 'text/plain').getBytes()
-  sendGuideEmail({
+  var result = sendGuideEmail({
     email: Session.getActiveUser().getEmail(),
     name: 'Test',
     pdfBase64: Utilities.base64Encode(fakePdf),
   })
+  console.log(result.getContent())
 }
